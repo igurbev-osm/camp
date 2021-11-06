@@ -1,4 +1,4 @@
-import React, { useState, memo, forwardRef, useImperativeHandle } from 'react'
+import React, { useState, useImperativeHandle } from 'react'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 
 import { mapConfig } from '../config/config';
@@ -21,32 +21,22 @@ function MapComponent(props, ref) {
     googleMapsApiKey: "AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
   });
 
-  const [markers, setMarkers] = useState( mapConfig.initialMarkers);
-  const [map, setMap] = useState(null);
-
-  const onLoad = React.useCallback(function callback(map) {
-    // const bounds = new window.google.maps.LatLngBounds();
-    // map.fitBounds(bounds);
-    
-    setMap(map);
-  }, [])
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null);
-  }, [])
-
+  const [markers, setMarkers] = useState( props.markers);
 
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={mapConfig.size}
       center={mapConfig.center}
-      zoom={mapConfig.zoom}
-      onLoad={onLoad}
-      onUnmount={onUnmount}
+      zoom={mapConfig.zoom}     
       onClick={props.onMapClick}
     >
 
-      {markers.map((mark, index) => <Marker onClick={props.onMarkerClick} key={index} position={mark} title={"marker " + index} icon={{url: "/img/tourism_camp_site.png"}}/>)}
+      {markers.map((mark, index) => <Marker
+       onClick={props.onMarkerClick} 
+       key={index} 
+       position={mark.position} 
+       title={mark.title} 
+       icon={mark.icon ? mark.icon : {url: "/img/tourism_camp_site.png"}}/>)}
 
     </GoogleMap>
   ) : <></>
