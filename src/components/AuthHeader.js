@@ -1,23 +1,39 @@
 import { useState } from "react";
-import { Navbar, NavDropdown } from "react-bootstrap";
+import { NavDropdown } from "react-bootstrap";
+import GoogleLogin, { GoogleLogout } from "react-google-login";
 import server from "../server/server";
+
+const googleClientId = "672108875979-0ips6gr56qkm87n8f808ql9hg7r5ve65.apps.googleusercontent.com";
 
 const AuthHeader = () => {
     const [user, setUser] = useState(null);
     if (!user) {
-        getUserInfo(setUser);
+       // getUserInfo(setUser);
     }
 
 
     return (
-        <>
-            {/* {user && user.username ? (<>Signed in as: <a href="#login"> {user.username}</a></>) : <a href="#login">Login</a>} */}
+        <>           
             {user && user.username ?  <NavDropdown title={user.username} id="navbarScrollingDropdown">
                             <NavDropdown.Item href="#action4">Profile</NavDropdown.Item>                            
-                            <NavDropdown.Item href="#action3">Logout</NavDropdown.Item>
+                            <NavDropdown.Item href="#action3"><GoogleLogout
+      clientId={googleClientId}
+      buttonText="Logout"
+      theme="light"
+      onLogoutSuccess={_ => setUser(null)} /></NavDropdown.Item>
                             
                             
-                        </NavDropdown> : <Navbar.Text> <a href="#login">Login</a> | <a href="#login">Register</a> </Navbar.Text>}
+                        </NavDropdown> :     <GoogleLogin
+                                clientId={googleClientId}
+                                buttonText="Login"                                
+                                onSuccess={(success)=> {
+                                    console.log("google success: ", success)
+                                    setUser({username: success.it.Se});
+                                }}
+                                onFailure={(failure)=> {console.log("google failure: ", failure)}}
+                                cookiePolicy={'single_host_origin'}
+                                style={{"color": "red", "backgroundColor": "green"}}
+  />}
         </>
     );
 }

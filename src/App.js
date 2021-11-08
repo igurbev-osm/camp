@@ -15,9 +15,11 @@ const App = () => {
   </Row>
   <Row>
     <Col>
-    <Main />;
+    <Main />
     </Col>
   </Row>
+
+
 </Container>
  )
  
