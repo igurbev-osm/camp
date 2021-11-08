@@ -12,11 +12,14 @@ const server = {
         }
     },
 
-    login: async function(){
-        const url = "https://google.com"
-        var resp = await axios.post(url, {username: "bla bla", passwd: "blabla"});
-        return resp.data;
-       
+    getUserInfo: async function(){
+        const url = `${serviceConfig.serviceUrl}/api/userinfo`;
+        try{           
+        var resp = await axios.get(url);
+        return resp.data;       
+        }catch(e){
+            return {error: e.message};
+        }
     }
 }
 
