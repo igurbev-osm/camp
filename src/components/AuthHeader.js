@@ -8,38 +8,37 @@ const googleClientId = "672108875979-0ips6gr56qkm87n8f808ql9hg7r5ve65.apps.googl
 const AuthHeader = () => {
     const [user, setUser] = useState(null);
     if (!user) {
-       // getUserInfo(setUser);
+        // getUserInfo(setUser);
     }
 
-
     return (
-        <>           
-            {user && user.username ?  <NavDropdown title={user.username} id="navbarScrollingDropdown">
-                            <NavDropdown.Item href="#action4">Profile</NavDropdown.Item>                            
-                            <NavDropdown.Item href="#action3"><GoogleLogout
-      clientId={googleClientId}
-      buttonText="Logout"
-      theme="light"
-      onLogoutSuccess={_ => setUser(null)} /></NavDropdown.Item>
-                            
-                            
-                        </NavDropdown> :     <GoogleLogin
-                                clientId={googleClientId}
-                                buttonText="Login"                                
-                                onSuccess={(success)=> {
-                                    console.log("google success: ", success)
-                                    setUser({username: success.it.Se});
-                                }}
-                                onFailure={(failure)=> {console.log("google failure: ", failure)}}
-                                cookiePolicy={'single_host_origin'}
-                                style={{"color": "red", "backgroundColor": "green"}}
-  />}
+        <>
+            {user && user.username ? 
+            <NavDropdown title={user.username} id="navbarScrollingDropdown">
+                <NavDropdown.Item href="#action4">Profile</NavDropdown.Item>
+                <NavDropdown.Item href="#action3"><GoogleLogout
+                    clientId={googleClientId}
+                    buttonText="Logout"
+                    theme="light"
+                    onLogoutSuccess={_ => setUser(null)} /></NavDropdown.Item>
+            </NavDropdown> 
+            : 
+            <GoogleLogin
+                clientId={googleClientId}
+                buttonText="Login"
+                onSuccess={(success) => {
+                    console.log("google success: ", success)
+                    login({profile: success.profileObj, token: success.tokenObj}, setUser);
+                }}
+                onFailure={(failure) => { console.log("google failure: ", failure) }}
+                cookiePolicy={'single_host_origin'}                
+            />}
         </>
     );
 }
 
-const getUserInfo = async (setUserFn) => {
-    const userInfo = await server.getUserInfo();
+const login = async (params, setUserFn) => {
+    const userInfo = await server.login(params);
     if (!userInfo.error) {
         setUserFn(userInfo);
     }
