@@ -5,7 +5,7 @@ const server = {
 
     login : async function(params){
         
-        const url = `${serviceConfig.serviceUrl}/api/login`;
+        const url = `${serviceConfig.serviceUrl}/api/google-login`;
         try{           
             return (await axios.post(url, params)).data;           
         }catch(e){
