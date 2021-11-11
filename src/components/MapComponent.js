@@ -25,7 +25,8 @@ function MapComponent(props, ref) {
 
   return isLoaded ? (
     <GoogleMap
-      mapContainerStyle={{width: 'calc(100%', height: '600px' }}
+      // mapContainerStyle={{width: 'calc(100%', height: '600px' }}
+      mapContainerStyle={{width: 'calc(100%)', height: '600px' }}
       center={mapConfig.center}
       zoom={mapConfig.zoom}     
       onClick={props.onMapClick}

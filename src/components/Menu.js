@@ -1,11 +1,12 @@
 import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button, Image } from "react-bootstrap";
 import AuthHeader from "./AuthHeader";
+import "./Menu.scss";
 
 const Menu = () => {
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="light" expand="lg" className="navBar">
             <Container fluid>
-                <Navbar.Brand href="#"><Image src="/img/tourism_camp_site.png" /> CampForNight</Navbar.Brand>
+                <Navbar.Brand href="#" className="navBarLogo"><Image src="/img/CamPointLogo3.png" className="logoNavBar" /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
@@ -13,9 +14,9 @@ const Menu = () => {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="#action1">Home</Nav.Link>
-                        <Nav.Link href="#action2">Link</Nav.Link>
-                        <NavDropdown title="Link" id="navbarScrollingDropdown">
+                        <Nav.Link href="#action1" className="navBarLink">Add Place</Nav.Link>
+                        <Nav.Link href="#action2" className="navBarLink">My Points</Nav.Link>
+                        {/* <NavDropdown title="Link" id="navbarScrollingDropdown" className="navBarLink">
                             <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
                             <NavDropdown.Item href="#action4">Another action</NavDropdown.Item>
                             <NavDropdown.Divider />
@@ -23,20 +24,20 @@ const Menu = () => {
                                 Something else here
                             </NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link href="#" disabled>
+                        <Nav.Link href="#" disabled className="navBarLink">
                             Link
-                        </Nav.Link>
-                        <Form className="d-flex">
+                        </Nav.Link> */}
+                        <Form className="d-flex ">
                         <FormControl
                             type="search"
-                            placeholder="Search"
+                            placeholder="Find a place"
                             className="me-2"
                             aria-label="Search"
                         />
-                        <Button variant="outline-success">Search</Button>
+                        <Button variant="outline-success" className="navBarButton">Search</Button>
                     </Form>
                     </Nav>                  
-                    <AuthHeader/>
+                    <AuthHeader />
 
                 </Navbar.Collapse>
             </Container>
