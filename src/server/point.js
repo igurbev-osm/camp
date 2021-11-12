@@ -11,7 +11,16 @@ const server = {
         } catch (e) {
             return { error: e.message };
         }
-    },    
+    },
+    
+    addPoint: async function(sid, point){
+        const url = `${serviceConfig.serviceUrl}/api/point/${sid}`;
+        try {
+            return (await axios.post(url, point)).data;
+        } catch (e) {
+            return { error: e.message };
+        }
+    }
 }
 
 export default server;

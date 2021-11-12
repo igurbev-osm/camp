@@ -30,7 +30,8 @@ const UserManager = (useSelector, useDispatch) => {
             }
             return user;
         },
-        setUser: setUser
+        setUser: setUser,
+        sid
     };
 }
 

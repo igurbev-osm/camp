@@ -35,9 +35,9 @@ function MapComponent(props, ref) {
       {markers.map((mark, index) => <Marker
        onClick={props.onMarkerClick} 
        key={index} 
-       position={mark.position} 
+       position={{lat: mark.lat, lng: mark.lng}} 
        title={mark.title} 
-       icon={mark.icon ? mark.icon : {url: "/img/tourism_camp_site.png"}}/>)}
+       icon={mark.url ? {url: mark.url} : {url: "/img/tourism_camp_site.png"}}/>)}
 
     </GoogleMap>
   ) : <></>
