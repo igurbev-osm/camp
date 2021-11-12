@@ -1,6 +1,6 @@
 import { set } from "../features/user/userSlice";
 import Cookies from 'universal-cookie';
-import server from "../server/server";
+import server from "../server/user";
 
 const UserManager = (useSelector, useDispatch) => {
 
