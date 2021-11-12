@@ -52,7 +52,8 @@ const AuthHeader = () => {
                     login({profile: success.profileObj, token: success.tokenObj});
                 }}
                 onFailure={(failure) => { console.log("google failure: ", failure) }}
-                cookiePolicy={'single_host_origin'}                
+                cookiePolicy={'single_host_origin'}  
+                style={{height: '30px'}}              
             />}
         </>
     );
