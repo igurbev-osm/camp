@@ -1,6 +1,6 @@
 import { NavDropdown, Image} from "react-bootstrap";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
-import server from "../server/server";
+import _userService from "../server/user";
 import "./AuthHeader.scss";
 import { useSelector, useDispatch } from 'react-redux';
 import initUserManager from "../store/userManager";
@@ -22,7 +22,7 @@ const AuthHeader = () => {
     
     
     const login = async (params) => {
-        const userInfo = await server.login(params);
+        const userInfo = await _userService.login(params);
         if (!userInfo.error) {           
             userManager.setUser(userInfo);
         }

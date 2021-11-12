@@ -1,5 +1,5 @@
 import React, {useRef, forwardRef,  useState} from "react";
-import _server from "../server/server";
+import _pointService from "../server/point";
 import MapComponent from "./MapComponent";
 
 function Main(){    
@@ -14,7 +14,7 @@ function Main(){
             (
                 async _ => {
                     
-                    let points =  await _server.getPoints();             
+                    let points =  await _pointService.getPoints();             
                     if(!points.error){
                         setMarkers(points);
                     }else {
