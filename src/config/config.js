@@ -6,5 +6,6 @@ export const mapConfig = {
 }
 
 export const serviceConfig = {
-        serviceUrl: "http://osmap.org:8003"
+        //serviceUrl: "http://osmap.org:8003"
+        serviceUrl: "http://localhost:8003"
 }

@@ -1,11 +1,15 @@
 import React, { useState, useImperativeHandle } from 'react'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
+import _pointService from "../server/point";
+import { useSelector, useDispatch } from 'react-redux';
+import initUserManager from "../store/userManager";
 
 import { mapConfig } from '../config/config';
 
 
 function MapComponent(props, ref) {
-  
+  const userManager = initUserManager(useSelector, useDispatch);
+  const [map, setMap] = useState(null);
   useImperativeHandle(
     ref,
     () => ({
@@ -30,6 +34,17 @@ function MapComponent(props, ref) {
       center={mapConfig.center}
       zoom={mapConfig.zoom}     
       onClick={props.onMapClick}
+      onBoundsChanged={ () => {
+        (
+          async ()=>{                       
+            console.log("map.getBounds(): ", map.getBounds())
+            setMarkers(await _pointService.getPoints(0, map.getBounds()));
+          }
+        )();
+      }}      
+      onLoad= {mapRef => {        
+        setMap(mapRef);
+      }}
     >
 
       {markers.map((mark, index) => <Marker

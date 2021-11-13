@@ -35,6 +35,7 @@ function Main(){
           onMapClick={
               e => {
                 const pointName = prompt("Enter point name");
+                if(pointName && pointName !== ""){
                 let point = {title: pointName, lat: e.latLng.lat(), lng: e.latLng.lng(), iconid: 1, description: "Wild camp"};
                 if(userManager.sid){
                 (
@@ -46,6 +47,7 @@ function Main(){
                     }
                 )();
                 }
+              }
               console.log(`{lat: ${e.latLng.lat()}, lng: ${e.latLng.lng()}}`);              
               
             }
