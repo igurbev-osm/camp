@@ -25,7 +25,7 @@ function MapComponent(props, ref) {
     googleMapsApiKey: "AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
   });
 
-  const [markers, setMarkers] = useState( props.markers);
+  const [markers, setMarkers] = useState( []);
 
   return isLoaded ? (
     <GoogleMap
