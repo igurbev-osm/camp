@@ -25,11 +25,7 @@ function MapComponent(props, ref) {
     id: 'google-map-script',
     googleMapsApiKey: "AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
   });
-
   
-
- 
-
   return isLoaded ? (
     <GoogleMap      
       mapContainerStyle={{width: 'calc(100%)', height: '600px' }}
@@ -45,7 +41,7 @@ function MapComponent(props, ref) {
               setTimeout(async () => {  
                 setMarkers(await _pointService.getPoints(0, reloadConf.currentBounds));
                 reloadConf.isRequestStart = false;
-                reloadConf.reloadInterval = 5000;
+                reloadConf.reloadInterval = 1000;
               }, reloadConf.reloadInterval);              
             }
             

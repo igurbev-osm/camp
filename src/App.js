@@ -20,7 +20,7 @@ const App = () => {
           <Main />
         </Col>
       </Row>
-      <Row>
+      {/* <Row>
         <Col>
           <Button variant="primary" onClick={() => setModalShow(true)}>
             ErrorPagePopup component
@@ -32,7 +32,7 @@ const App = () => {
           />
         </Col>
       </Row>
-
+ */}
 
     </Container>
   )
