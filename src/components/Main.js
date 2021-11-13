@@ -30,8 +30,7 @@ function Main(){
               
             }
           }
-          onMarkerClick = {e => {
-              
+          onMarkerClick = {e => {              
             console.log(`Marker: ${e.domEvent.currentTarget.title} | {lat: ${e.latLng.lat()}, lng: ${e.latLng.lng()}}`);           
           }}
           ref={childRef}

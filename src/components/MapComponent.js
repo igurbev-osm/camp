@@ -3,13 +3,14 @@ import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import _pointService from "../server/point";
 import { useSelector, useDispatch } from 'react-redux';
 import initUserManager from "../store/userManager";
+import {reloadConf} from "../config/config"
 
 import { mapConfig } from '../config/config';
-
 
 function MapComponent(props, ref) {
   const userManager = initUserManager(useSelector, useDispatch);
   const [map, setMap] = useState(null);
+  const [markers, setMarkers] = useState( []);
   useImperativeHandle(
     ref,
     () => ({
@@ -25,11 +26,12 @@ function MapComponent(props, ref) {
     googleMapsApiKey: "AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
   });
 
-  const [markers, setMarkers] = useState( []);
+  
+
+ 
 
   return isLoaded ? (
-    <GoogleMap
-      // mapContainerStyle={{width: 'calc(100%', height: '600px' }}
+    <GoogleMap      
       mapContainerStyle={{width: 'calc(100%)', height: '600px' }}
       center={mapConfig.center}
       zoom={mapConfig.zoom}     
@@ -37,13 +39,21 @@ function MapComponent(props, ref) {
       onBoundsChanged={ () => {
         (
           async ()=>{                       
-            console.log("map.getBounds(): ", map.getBounds())
-            setMarkers(await _pointService.getPoints(0, map.getBounds()));
+            reloadConf.currentBounds =  map.getBounds();
+            if(!reloadConf.isRequestStart){
+              reloadConf.isRequestStart = true;
+              setTimeout(async () => {  
+                setMarkers(await _pointService.getPoints(0, reloadConf.currentBounds));
+                reloadConf.isRequestStart = false;
+                reloadConf.reloadInterval = 5000;
+              }, reloadConf.reloadInterval);              
+            }
+            
           }
         )();
       }}      
-      onLoad= {mapRef => {        
-        setMap(mapRef);
+      onLoad= {async mapRef => {        
+        setMap(mapRef);        
       }}
     >
 
