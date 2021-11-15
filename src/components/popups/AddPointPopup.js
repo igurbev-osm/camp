@@ -15,7 +15,7 @@ function AddPointPopup(props) {
 
     const checkValidity = _ => {        
         return (           
-            name && name.length > 5
+            name && name.length >= 4
             && description && description.length > 10
             );
     }
@@ -29,6 +29,15 @@ function AddPointPopup(props) {
     const ratingChanged = (newRating) => {
         console.log(newRating)
     }
+
+    const getIconUrl = _ => {
+        const f = pointtypes.find(t=>t.id == pointTypeId);
+        if(f){
+            return f.url;
+        }
+        return null;
+    }
+
     return (
         <Modal
             {...props}
@@ -72,7 +81,7 @@ function AddPointPopup(props) {
                     
                     <Row>
                         <Col column="lg" lg={1}>
-                    {pointtypes && <Image src={pointtypes[pointTypeId - 1].url} />}
+                    {pointtypes && <Image className="point-icon" src={getIconUrl()} />}
                     </Col>
                     <Col>
                     <Form.Select aria-label="Floating label select example" onChange={e => setPointTypeId(e.target.value)}>
@@ -97,21 +106,18 @@ function AddPointPopup(props) {
                     </Form.Group>
                     <Button variant="primary" onClick={
                         async (event) => {                            
-                            
+                            debugger
                             if (!checkValidity()) {
                                 event.preventDefault();
                                 event.stopPropagation();                                
+                                setValidated(true);
                             }else{
                                 let point = { title: name, lat: selection.lat, lng: selection.lng, typeid: pointTypeId, description: description };                            
                                 point = await _pointServece.addPoint(sid, point);
+                                point.url = getIconUrl()
                                 resetValues();
-                                onHide(point);
+                                onHide(point);                                
                             }
-        
-                            setValidated(true);
-
-
-                            
                         }
                     }>
                         Submit
