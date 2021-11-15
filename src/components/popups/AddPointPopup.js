@@ -13,11 +13,11 @@ function AddPointPopup(props) {
 
     const [validated, setValidated] = useState(false);
 
-    const checkValidity = _ => {        
-        return (           
+    const checkValidity = _ => {
+        return (
             name && name.length > 5
             && description && description.length > 10
-            );
+        );
     }
 
     const resetValues = _ => {
@@ -30,34 +30,34 @@ function AddPointPopup(props) {
         console.log(newRating)
     }
     return (
-        <Modal
+        <Modal className='modal'
             {...props}
             dialogClassName="modal-90w"
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
             <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter" style={{ textAlign: "center" }}>
-                    Good for you.<br /> Now lets gather some information!
+                <Modal.Title id="contained-modal-title-vcenter" >
+                    Good, now lets do some work!
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form validated={validated} >
-                    
-                    <Form.Control type="text" placeholder={"lat: " + (selection && selection.lat) + " lng: " + (selection && selection.lng)} readOnly />
-                        <Form.Group md="4" controlId="validationCustom01" >
-                            <Form.Control onChange={e => setName(e.target.value)}
-                                as="input"
-                                required
-                                placeholder="Place your Point Name here"
-                                value={name}                            
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Please provide a valid point name.
-                            </Form.Control.Feedback>
-                        </Form.Group>
 
-                        <Form.Group md="4" controlId="validationCustom02" >
+                    <Form.Control type="text" placeholder={"lat: " + (selection && selection.lat) + " lng: " + (selection && selection.lng)} readOnly />
+                    <Form.Group md="4" controlId="validationCustom01" >
+                        <Form.Control onChange={e => setName(e.target.value)}
+                            as="input"
+                            required
+                            placeholder="Place your Point Name here"
+                            value={name}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            Please provide a valid point name.
+                        </Form.Control.Feedback>
+                    </Form.Group>
+
+                    <Form.Group md="4" controlId="validationCustom02" >
                         <Form.Control onChange={e => setDescription(e.target.value)}
                             as="textarea"
                             required
@@ -66,21 +66,21 @@ function AddPointPopup(props) {
                             style={{ height: '100px' }}
                         />
                         <Form.Control.Feedback type="invalid">
-                                Please provide a valid description.
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                    
+                            Please provide a valid description.
+                        </Form.Control.Feedback>
+                    </Form.Group>
+
                     <Row>
                         <Col column="lg" lg={1}>
-                    {pointtypes && <Image src={pointtypes[pointTypeId - 1].url} />}
-                    </Col>
-                    <Col>
-                    <Form.Select aria-label="Floating label select example" onChange={e => setPointTypeId(e.target.value)}>
-                        {pointtypes && pointtypes.map((type) => {
-                            return <option key={type.id} value={type.id}>{type.name}</option>
-                        })}
-                    </Form.Select>
-                    </Col>
+                            {pointtypes && <Image src={pointtypes[pointTypeId - 1].url} />}
+                        </Col>
+                        <Col>
+                            <Form.Select aria-label="Floating label select example" onChange={e => setPointTypeId(e.target.value)}>
+                                {pointtypes && pointtypes.map((type) => {
+                                    return <option key={type.id} value={type.id}>{type.name}</option>
+                                })}
+                            </Form.Select>
+                        </Col>
                     </Row>
 
                     <FloatingLabel controlId="PointRating" label="Rate the point" />
@@ -96,22 +96,22 @@ function AddPointPopup(props) {
                         <Form.Control type="file" size="sm" />
                     </Form.Group>
                     <Button variant="primary" onClick={
-                        async (event) => {                            
-                            
+                        async (event) => {
+
                             if (!checkValidity()) {
                                 event.preventDefault();
-                                event.stopPropagation();                                
-                            }else{
-                                let point = { title: name, lat: selection.lat, lng: selection.lng, typeid: pointTypeId, description: description };                            
+                                event.stopPropagation();
+                            } else {
+                                let point = { title: name, lat: selection.lat, lng: selection.lng, typeid: pointTypeId, description: description };
                                 point = await _pointServece.addPoint(sid, point);
                                 resetValues();
                                 onHide(point);
                             }
-        
+
                             setValidated(true);
 
 
-                            
+
                         }
                     }>
                         Submit
