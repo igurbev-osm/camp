@@ -13,9 +13,9 @@ function AddPointPopup(props) {
 
     const [validated, setValidated] = useState(false);
 
-    const checkValidity = _ => {
-        return (
-            name && name.length > 5
+    const checkValidity = _ => {        
+        return (           
+            name && name.length >= 4
             && description && description.length > 10
         );
     }
@@ -29,6 +29,15 @@ function AddPointPopup(props) {
     const ratingChanged = (newRating) => {
         console.log(newRating)
     }
+
+    const getIconUrl = _ => {
+        const f = pointtypes.find(t=>t.id == pointTypeId);
+        if(f){
+            return f.url;
+        }
+        return null;
+    }
+
     return (
         <Modal className='modal'
             {...props}
@@ -72,15 +81,15 @@ function AddPointPopup(props) {
 
                     <Row>
                         <Col column="lg" lg={1}>
-                            {pointtypes && <Image src={pointtypes[pointTypeId - 1].url} />}
-                        </Col>
-                        <Col>
-                            <Form.Select aria-label="Floating label select example" onChange={e => setPointTypeId(e.target.value)}>
-                                {pointtypes && pointtypes.map((type) => {
-                                    return <option key={type.id} value={type.id}>{type.name}</option>
-                                })}
-                            </Form.Select>
-                        </Col>
+                    {pointtypes && <Image className="point-icon" src={getIconUrl()} />}
+                    </Col>
+                    <Col>
+                    <Form.Select aria-label="Floating label select example" onChange={e => setPointTypeId(e.target.value)}>
+                        {pointtypes && pointtypes.map((type) => {
+                            return <option key={type.id} value={type.id}>{type.name}</option>
+                        })}
+                    </Form.Select>
+                    </Col>
                     </Row>
 
                     <FloatingLabel controlId="PointRating" label="Rate the point" />
@@ -96,22 +105,19 @@ function AddPointPopup(props) {
                         <Form.Control type="file" size="sm" />
                     </Form.Group>
                     <Button variant="primary" onClick={
-                        async (event) => {
-
+                        async (event) => {                            
+                            debugger
                             if (!checkValidity()) {
                                 event.preventDefault();
-                                event.stopPropagation();
-                            } else {
-                                let point = { title: name, lat: selection.lat, lng: selection.lng, typeid: pointTypeId, description: description };
+                                event.stopPropagation();                                
+                                setValidated(true);
+                            }else{
+                                let point = { title: name, lat: selection.lat, lng: selection.lng, typeid: pointTypeId, description: description };                            
                                 point = await _pointServece.addPoint(sid, point);
+                                point.url = getIconUrl()
                                 resetValues();
-                                onHide(point);
+                                onHide(point);                                
                             }
-
-                            setValidated(true);
-
-
-
                         }
                     }>
                         Submit
