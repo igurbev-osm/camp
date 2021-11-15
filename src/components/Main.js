@@ -1,19 +1,30 @@
-import React, {useRef, forwardRef, useState} from "react";
+import React, {useRef, forwardRef, useState, useEffect} from "react";
 import _pointService from "../server/point";
 import MapComponent from "./MapComponent";
-import { useSelector, useDispatch } from 'react-redux';
-import initUserManager from "../store/userManager";
 import AddPointPopup from './popups/AddPointPopup';
+import { useSelector, useDispatch } from 'react-redux';
+import initUserManager from "../utils/userManager";
 
 function Main(){    
+        const userManager = initUserManager(useSelector, useDispatch);
         const childRef = useRef();
         const Map = forwardRef(MapComponent);
-        const userManager = initUserManager(useSelector, useDispatch);
         const [modalShow, setModalShow] = useState(false); 
+        const [currentSelection, setSelection] = useState(null);
+        const [pointTypes, setPointTypes] = useState(null);
+
+        useEffect(() => {
+          (
+            async()=>{
+              setPointTypes(await _pointService.getPointTypes());
+            }
+          )();
+        }, []);
        
         return <><Map 
           onMapClick={
               e => {
+                if(userManager.sid){
                 // const pointName = prompt("Enter point name");
                 // if(pointName && pointName !== ""){
                 // let point = {title: pointName, lat: e.latLng.lat(), lng: e.latLng.lng(), iconid: 1, description: "Wild camp"};
@@ -29,7 +40,9 @@ function Main(){
                 // }
                
               //}
-              setModalShow(true);
+                setSelection({lat: e.latLng.lat(), lng: e.latLng.lng()});
+                setModalShow(true);
+              }
               console.log(`{lat: ${e.latLng.lat()}, lng: ${e.latLng.lng()}}`);              
               
             }
@@ -41,7 +54,15 @@ function Main(){
         />
          <AddPointPopup
             show={modalShow}
-            onHide={() => setModalShow(false)}
+            onHide={(point) => {
+              if(point){
+                childRef.current.addMarkers([point], true);
+              }
+              setModalShow(false);
+            }}
+            selection={currentSelection}
+            pointtypes={pointTypes}
+            sid={userManager.sid}
           />
         </>
     

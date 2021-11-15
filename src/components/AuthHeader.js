@@ -3,7 +3,7 @@ import GoogleLogin, { GoogleLogout } from "react-google-login";
 import _userService from "../server/user";
 import "./AuthHeader.scss";
 import { useSelector, useDispatch } from 'react-redux';
-import initUserManager from "../store/userManager";
+import initUserManager from "../utils/userManager";
 
 const googleClientId = "672108875979-0ips6gr56qkm87n8f808ql9hg7r5ve65.apps.googleusercontent.com";
 

@@ -9,9 +9,3 @@ export const serviceConfig = {
         serviceUrl: "http://osmap.org:8003"
         //serviceUrl: "http://localhost:8003"
 }
-
-export const reloadConf = {
-        currentBounds: null,
-        isRequestStart: false,
-        reloadInterval: 0
-      }

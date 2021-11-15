@@ -2,8 +2,8 @@ import React, { useState, useImperativeHandle } from 'react'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import _pointService from "../server/point";
 import { useSelector, useDispatch } from 'react-redux';
-import initUserManager from "../store/userManager";
-import {reloadConf} from "../config/config"
+import initUserManager from "../utils/userManager";
+import {reloadConf} from "../utils/reloadConfig"
 
 import { mapConfig } from '../config/config';
 
@@ -41,7 +41,7 @@ function MapComponent(props, ref) {
               setTimeout(async () => {  
                 setMarkers(await _pointService.getPoints(0, reloadConf.currentBounds));
                 reloadConf.isRequestStart = false;
-                reloadConf.reloadInterval = 1000;
+                reloadConf.reloadInterval = reloadConf.nextStepInterval;
               }, reloadConf.reloadInterval);              
             }
             
