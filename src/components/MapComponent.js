@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import initUserManager from "../utils/userManager";
 import { reloadConf } from "../utils/reloadConfig"
 
-import { mapConfig } from '../config/config';
+import { mapConfig, googleMapConfig } from '../config/config';
 import AddPointPopup from './popups/AddPointPopup';
 
 function MapComponent(props) {
@@ -17,7 +17,7 @@ function MapComponent(props) {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
+    googleMapsApiKey: googleMapConfig.googleMapsApiKey
   });
 
 

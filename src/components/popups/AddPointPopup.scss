@@ -5,6 +5,11 @@
             font-weight: 700!important;
             color: #366c56!important;
 
+            .modal-title-text{
+                width: 100%;
+                text-align: center;
+            }
+
             .modal-body{
                 .form-control, .form-select{
                     color: #366c56!important;
@@ -30,7 +35,10 @@
                     color: #366c56!important;
                     background-color: #e9f5f7!important;
                     border-color: #366c56!important;
-                
+                    float: right;
+                    margin-top: 30px;
+                    
+
                     &:hover {
                         background-color: #cce6eb!important;
                     }

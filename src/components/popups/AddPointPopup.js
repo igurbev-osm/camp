@@ -1,4 +1,4 @@
-import { Modal, Button, Form, FloatingLabel, Image, Row, Col } from "react-bootstrap";
+import { Modal, Button, Form, Image, Row, Col } from "react-bootstrap";
 import ReactStars from 'react-stars'
 import "./AddPointPopup.scss";
 import React, { useState } from "react";
@@ -31,7 +31,7 @@ function AddPointPopup(props) {
     }
 
     const getIconUrl = _ => {
-        const f = pointtypes.find(t=>t.id == pointTypeId);
+        const f = pointtypes.find(t=>t.id === pointTypeId);
         if(f){
             return f.url;
         }
@@ -46,7 +46,7 @@ function AddPointPopup(props) {
             centered
         >
             <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter" >
+                <Modal.Title id="contained-modal-title-vcenter" className="modal-title-text" >
                     Good, now lets do some work!
                 </Modal.Title>
             </Modal.Header>
@@ -91,7 +91,7 @@ function AddPointPopup(props) {
                     </Form.Select>
                     </Col>
                     </Row>
-
+{/* 
                     <FloatingLabel controlId="PointRating" label="Rate the point" />
                     <ReactStars
                         count={5}
@@ -103,10 +103,10 @@ function AddPointPopup(props) {
                     <Form.Group controlId="formFileSm" className="mb-3 uploadFile">
                         <Form.Label>Select Image to upload</Form.Label>
                         <Form.Control type="file" size="sm" />
-                    </Form.Group>
+                    </Form.Group> */}
+                    
                     <Button variant="primary" onClick={
-                        async (event) => {                            
-                            debugger
+                        async (event) => {    
                             if (!checkValidity()) {
                                 event.preventDefault();
                                 event.stopPropagation();                                
@@ -120,8 +120,9 @@ function AddPointPopup(props) {
                             }
                         }
                     }>
-                        Submit
+                        Next
                     </Button>
+                    
                 </Form>
             </Modal.Body>
         </Modal>

@@ -1,4 +1,4 @@
-import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button, Image } from "react-bootstrap";
+import { Navbar, Container, Nav,  Form, FormControl, Button, Image } from "react-bootstrap";
 import AuthHeader from "./AuthHeader";
 import "./Menu.scss";
 
