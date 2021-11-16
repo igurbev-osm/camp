@@ -2,7 +2,8 @@ import { Modal, Button, Form, Image, Row, Col } from "react-bootstrap";
 import ReactStars from 'react-stars'
 import "./AddPointPopup.scss";
 import React, { useState } from "react";
-import _pointServece from "../../server/point"
+import _pointServece from "../../server/point";
+import _uploadService from "../../server/upload";
 
 
 function AddPointPopup(props) {
@@ -91,8 +92,8 @@ function AddPointPopup(props) {
                     </Form.Select>
                     </Col>
                     </Row>
-{/* 
-                    <FloatingLabel controlId="PointRating" label="Rate the point" />
+
+                 
                     <ReactStars
                         count={5}
                         half={false}
@@ -100,10 +101,14 @@ function AddPointPopup(props) {
                         size={30}
                         color2={'#ffd700'}
                         className='rating' />
+
                     <Form.Group controlId="formFileSm" className="mb-3 uploadFile">
                         <Form.Label>Select Image to upload</Form.Label>
-                        <Form.Control type="file" size="sm" />
-                    </Form.Group> */}
+                        <Form.Control type="file" size="sm" onChange={(e)=>{      
+                               _uploadService.upload(e.target.files[0]);                   
+                                                    
+                        }}/>
+                    </Form.Group>
                     
                     <Button variant="primary" onClick={
                         async (event) => {    
