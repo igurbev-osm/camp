@@ -1,22 +1,40 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Modal, Button, Form, Image, Row, Col } from "react-bootstrap";
+import { Next } from "react-bootstrap/esm/PageItem";
+import _pointServece from "../../../server/point";
+import "./AddPointStep1.scss";
+
 
 const AddPointStep1 = (props) => {
-    const { selection, pointtypes, sid, onNext } = { ...props };
+   
+    const { selection, pointtypes, sid, next } = { ...props };
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [pointTypeId, setPointTypeId] = useState(1);
 
     const [validated, setValidated] = useState(false);
 
-    const getIconUrl = _ => {
-        const f = pointtypes.find(t=>t.id === pointTypeId);
-        if(f){
+    const getIconUrl = _ => {        
+        const f = pointtypes.find(t => t.id === (!isNaN(pointTypeId) ? Number(pointTypeId) : pointTypeId));
+        if (f) {
             return f.url;
         }
         return null;
     }
-    
+    const checkValidity = _ => {        
+        return (           
+            name && name.length >= 4
+            && description && description.length > 10
+        );
+    }
+
+    const resetValues = _ => {
+        setName("");
+        setDescription("");
+        setPointTypeId(1);
+        setValidated(false);
+    }    
+
     return (
         <>
             <Form validated={validated} >
@@ -59,10 +77,28 @@ const AddPointStep1 = (props) => {
                         </Form.Select>
                     </Col>
                 </Row>
-                
-                                </Form>
-            </>
-            );
+
+            </Form>
+            <Button variant="primary" onClick={
+                async (event) => {
+                    if (!checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        setValidated(true);
+                    } else {
+                        let point = { title: name, lat: selection.lat, lng: selection.lng, typeid: pointTypeId, description: description };
+                        point = await _pointServece.addPoint(sid, point);
+                        point.url = getIconUrl()
+                        resetValues();                
+                        //onHide(point);
+                        next(point);
+                    }
+                }
+            }>
+                Submit
+            </Button>
+        </>
+    );
 }
 
-            export default AddPointStep1;
+export default AddPointStep1;

@@ -5,7 +5,7 @@ import getCroppedImg from "../../utils/cropImage";
 import _uploadService from "../../server/upload";
 
 const CropImage = (props) => {
-    const { imageSrc, imageName, next } = { ...props };
+    const { imageSrc, imageName, next, point, sid } = { ...props };
 
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
@@ -19,32 +19,42 @@ const CropImage = (props) => {
             imageSrc,
             croppedAreaPixels
         )
-        await _uploadService.upload(new File([croppedImage], imageName));        
+        await _uploadService.upload(new File([croppedImage], imageName), point.id, sid);
         next();
     };
 
     return (
         <>
             {imageSrc ? (
-                <React.Fragment>
-                    <div >
-                        <Cropper
-                            image={imageSrc}
-                            crop={crop}                            
-                            aspect={4 / 3}
-                            onCropChange={setCrop}                            
-                            onCropComplete={onCropComplete}                        
-                        />
-                    </div>
-                    <div >
-                        <Button
-                            onClick={showCroppedImage}
-                            variant="outline-primary"
-                        >
-                            Upload
-                        </Button>
-                    </div>
-                </React.Fragment>
+                <div >
+                    
+                    
+                            <Cropper
+                                image={imageSrc}
+                                crop={crop}
+                                aspect={4 / 3}
+                                onCropChange={setCrop}
+                                onCropComplete={onCropComplete}
+                                
+                            />
+
+
+
+                       
+                    
+                    <Button
+                        onClick={showCroppedImage}
+                        variant="primary"
+                        style={{
+                            position: 'absolute',
+                            bottom: '2px',
+                            left: '2px'
+                        }}
+                    >
+                        Upload
+                    </Button>
+                    
+                </div>
             ) : (
                 <div />
             )}

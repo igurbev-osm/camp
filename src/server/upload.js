@@ -2,7 +2,7 @@ import axios from "axios";
 import { serviceConfig } from "../config/config";
 
 const server = {
-    async upload(file) {               
+    async upload(file, pointId, sid) {                     
         const data = new FormData();
         data.append('file', file);
         const headers = {

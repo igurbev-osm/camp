@@ -10,3 +10,7 @@ export const serviceConfig = {
 export const googleMapConfig = {
         googleMapsApiKey: "AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
 }
+
+export const addPointCoing = {
+        steps: 2 
+}
