@@ -5,15 +5,17 @@ const server = {
     async upload(file) {               
         const data = new FormData();
         data.append('file', file);
-        axios.post(serviceConfig.serviceUrl + "/api/upload", data, {
+        const headers = {
             headers: {
                 'Content-Type': 'multipart/form-data',
-            },
-        }).then(res => {
-            console.log(res);
-        }).catch(err => {
-            console.log(err);
-        });
+            }
+        };
+        try{
+            await axios.post(serviceConfig.serviceUrl + "/api/upload", data, headers);
+        }catch(e){
+            console.log("file upload error: ",e);
+            throw new Error("File upload error");
+        }
     }
 }
 

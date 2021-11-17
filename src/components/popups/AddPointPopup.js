@@ -3,7 +3,9 @@ import ReactStars from 'react-stars'
 import "./AddPointPopup.scss";
 import React, { useState } from "react";
 import _pointServece from "../../server/point";
-import _uploadService from "../../server/upload";
+
+import {readFile} from "../../utils/cropImage"
+import CropImage from "./CropImage";
 
 
 function AddPointPopup(props) {
@@ -13,6 +15,7 @@ function AddPointPopup(props) {
     const [pointTypeId, setPointTypeId] = useState(1);
 
     const [validated, setValidated] = useState(false);
+    const [imageData, setImageData] = useState(null);
 
     const checkValidity = _ => {        
         return (           
@@ -104,8 +107,11 @@ function AddPointPopup(props) {
 
                     <Form.Group controlId="formFileSm" className="mb-3 uploadFile">
                         <Form.Label>Select Image to upload</Form.Label>
-                        <Form.Control type="file" size="sm" onChange={(e)=>{      
-                               _uploadService.upload(e.target.files[0]);                   
+                        <Form.Control type="file" size="sm" onChange={async(e)=>{    
+                            const file = e.target.files[0];
+                            debugger
+                            let imageDataUrl = await readFile(file)
+                            setImageData({src: imageDataUrl, name: file.name});
                                                     
                         }}/>
                     </Form.Group>
@@ -129,6 +135,9 @@ function AddPointPopup(props) {
                     </Button>
                     
                 </Form>
+                    {imageData && <CropImage imageSrc={imageData.src} imageName={imageData.name} next={()=>{setImageData(null)}}/>}
+
+
             </Modal.Body>
         </Modal>
     );

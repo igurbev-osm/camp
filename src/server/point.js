@@ -28,7 +28,8 @@ const server = {
         try {
             return (await axios.get(url)).data;
         } catch (e) {
-            return { error: e.message };
+            throw new Error("Error connection server");
+            //return { error: e.message };
         }
 
     }
