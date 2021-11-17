@@ -32,7 +32,17 @@ const server = {
             //return { error: e.message };
         }
 
-    }
+    },
+
+    getPoint: async function (sid, pointId) {
+
+        const url = `${serviceConfig.serviceUrl}/api/point/${sid ? sid : 0}/pointId`;
+        try {
+            return (await axios.get(url)).data;
+        } catch (e) {
+            return { error: e.message };
+        }
+    },
 }
 
 export default server;
