@@ -15,7 +15,7 @@ function MapComponent(props) {
   const [markers, setMarkers] = useState([]);
   const [modalShow, setModalShow] = useState(false);
   const [currentSelection, setSelection] = useState(null);
-  const [selectedPoit, setSelectedPoint] = useState(null);
+  const [selectedPoint, setSelectedPoint] = useState(null);
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -68,14 +68,14 @@ function MapComponent(props) {
   </GoogleMap>
   }
 
-    {!!selectedPoit && <PointDetailsPopup
-      show={!!selectedPoit}
-      point={selectedPoit}
+    {!!selectedPoint && <PointDetailsPopup
+      show={!!selectedPoint}
+      point={selectedPoint}
       onHide={()=>{
         setSelectedPoint(null)
       }}
       pointtypes={props.pointTypes}
-      sid={userManager.sid}
+      sid={userManager.sid || null}
 
     />}
 
@@ -89,7 +89,7 @@ function MapComponent(props) {
       }}
       selection={currentSelection}
       pointtypes={props.pointTypes}
-      sid={userManager.sid}
+      sid={userManager.sid || null}
     />
   </>)
 }

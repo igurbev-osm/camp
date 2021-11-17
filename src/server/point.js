@@ -35,8 +35,7 @@ const server = {
     },
 
     getPoint: async function (sid, pointId) {
-
-        const url = `${serviceConfig.serviceUrl}/api/point/${sid ? sid : 0}/pointId`;
+        const url = `${serviceConfig.serviceUrl}/api/point/${sid ? sid : 0}/${pointId}`;
         try {
             return (await axios.get(url)).data;
         } catch (e) {
