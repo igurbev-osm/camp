@@ -16,11 +16,7 @@ function Main() {
   return <> {
     pointTypes &&
     <MapComponent
-      pointTypes={pointTypes}
-      onMarkerClick={function(e){
-        const pointId = this.id;        
-        console.log(`Marker: ${e.domEvent.currentTarget.title} | {lat: ${e.latLng.lat()}, lng: ${e.latLng.lng()}}`);
-      }}
+      pointTypes={pointTypes}     
     />}
   </>
 

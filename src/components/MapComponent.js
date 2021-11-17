@@ -7,6 +7,7 @@ import { reloadConf } from "../utils/reloadConfig"
 
 import { mapConfig, googleMapConfig } from '../config/config';
 import AddPointPopup from './popups/AddPointPopup';
+import PointDetailsPopup from './popups/PointDetailsPopup';
 
 function MapComponent(props) {
   const userManager = initUserManager(useSelector, useDispatch);
@@ -14,6 +15,7 @@ function MapComponent(props) {
   const [markers, setMarkers] = useState([]);
   const [modalShow, setModalShow] = useState(false);
   const [currentSelection, setSelection] = useState(null);
+  const [selectedPoit, setSelectedPoint] = useState(null);
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -55,14 +57,28 @@ function MapComponent(props) {
   >
 
     {markers.map((mark, index) => <Marker
-      onClick={props.onMarkerClick.bind(mark)}
-      key={mark.id}      
+      onClick={(function () {
+        setSelectedPoint(this);
+      }).bind(mark)}
+      key={mark.id}
       position={{ lat: mark.lat, lng: mark.lng }}
       title={mark.title}
       icon={mark.url ? { url: mark.url } : { url: "/img/tourism_camp_site.png" }} />)}
 
   </GoogleMap>
   }
+
+    {!!selectedPoit && <PointDetailsPopup
+      show={!!selectedPoit}
+      point={selectedPoit}
+      onHide={()=>{
+        setSelectedPoint(null)
+      }}
+      pointtypes={props.pointTypes}
+      sid={userManager.sid}
+
+    />}
+
     <AddPointPopup
       show={modalShow}
       onHide={(point) => {

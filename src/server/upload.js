@@ -11,7 +11,7 @@ const server = {
             }
         };
         try{
-            await axios.post(serviceConfig.serviceUrl + "/api/upload", data, headers);
+            await axios.post(`${serviceConfig.serviceUrl}/api/upload/${sid}/${pointId}`, data, headers);
         }catch(e){
             console.log("file upload error: ",e);
             throw new Error("File upload error");
