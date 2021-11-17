@@ -55,8 +55,8 @@ function MapComponent(props) {
   >
 
     {markers.map((mark, index) => <Marker
-      onClick={props.onMarkerClick}
-      key={index}
+      onClick={props.onMarkerClick.bind(mark)}
+      key={mark.id}      
       position={{ lat: mark.lat, lng: mark.lng }}
       title={mark.title}
       icon={mark.url ? { url: mark.url } : { url: "/img/tourism_camp_site.png" }} />)}
