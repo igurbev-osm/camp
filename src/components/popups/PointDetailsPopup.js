@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Modal, Button, Carousel } from "react-bootstrap";
+import { Modal, Button, Carousel, Image } from "react-bootstrap";
 import ReactStars from 'react-stars'
 import "./PointDetailsPopup.scss";
 import _pointService from "../../server/point";
@@ -27,13 +27,14 @@ const PointDetailsPopup = (props) => {
                 >
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter" style={{ textAlign: "center" }}>
+                        <Image src={selectedPointDetails.url} style={{marginRight: "10px"}}/>
                             {selectedPointDetails.title}
                         </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
-                        <h4 style={{ textAlign: "center" }}>AaAa aaa</h4>
-                        <img src={selectedPointDetails.url} /> 
+                    <Modal.Body>                       
+                         
                         <p>
+                        
                             {selectedPointDetails.description}
                         </p>
                         <Carousel>

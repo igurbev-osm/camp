@@ -12,5 +12,6 @@ export const googleMapConfig = {
 }
 
 export const addPointCoing = {
-        steps: 2 
+        steps: 2 ,
+        maxImagesPerPoint: 5
 }

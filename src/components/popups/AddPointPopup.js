@@ -1,5 +1,4 @@
-import { Modal, Button, Form, Image, Row, Col } from "react-bootstrap";
-import ReactStars from 'react-stars'
+import { Modal} from "react-bootstrap";
 import "./AddPointPopup.scss";
 import React, { useState } from "react";
 
@@ -17,10 +16,6 @@ function AddPointPopup(props) {
     const [step, setStep] = useState(1);
     const [point, setPoint] = useState(null);
  
-    const ratingChanged = (newRating) => {
-        console.log(newRating)
-    }    
-
     const next = (point)=>{
         setPoint(point);
         if(step >= addPointCoing.steps){
@@ -29,7 +24,7 @@ function AddPointPopup(props) {
         }else{
             setStep(step + 1);
         }
-    }
+    }    
 
     return (
         <Modal className='modal'
@@ -37,6 +32,9 @@ function AddPointPopup(props) {
             dialogClassName="modal-90w"
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            onHide={()=> {
+                setStep(1);
+                onHide(point);}}
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter" className="modal-title-text" >

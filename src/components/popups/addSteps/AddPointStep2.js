@@ -1,14 +1,26 @@
 import React, { useState } from "react";
-import { Modal, Button, Form, Image, Row, Col } from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import { readFile } from "../../../utils/cropImage";
 import CropImage from "../CropImage";
 import "./AddPointStep2.scss";
+import _uploadService from "../../../server/upload";
+import { addPointCoing } from "../../../config/config";
 
 const AddPointStep2 = (props) => {
-    const { selection, pointtypes, sid, next, point } = { ...props };
+    const {next, point, sid } = { ...props };
 
     const [imageData, setImageData] = useState(null);
+    const [uploadedList, setUploadedList] = useState([]);
 
+    const onUploaded = async (poitId)=>{
+        setImageData(null);
+        const pointImages = await _uploadService.getImages(point.id, sid);
+        if(pointImages && addPointCoing.maxImagesPerPoint > pointImages.length){
+            setUploadedList(pointImages);
+        }else{
+           next();
+        }
+    }
 
     return (
         <>
@@ -22,14 +34,14 @@ const AddPointStep2 = (props) => {
 
                     }} />
                 </Form.Group>
+                {uploadedList.map(img => {
+                    return <p key={img.id}> {img.title}</p>
+                })}
                 {imageData &&
                 <div className="crop-containter"><CropImage
                     imageSrc={imageData.src}
                     imageName={imageData.name}
-                    next={() => {
-                        setImageData(null);
-                        next();
-                    }}
+                    onUpload={onUploaded}
                     point={point}
                     {...props}
                 />
