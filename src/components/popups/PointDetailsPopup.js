@@ -8,7 +8,7 @@ import { serviceConfig } from "../../config/config.js";
 import { useSelector, useDispatch } from 'react-redux';
 import initUserManager from "../../utils/userManager";
 
-const PointDetailsPopup = ({ point, show, onHide }) => {
+const PointDetailsPopup = ({ point, show, onHide, onEdit }) => {
     const user = initUserManager(useSelector, useDispatch).getUser();
     const [selectedPointDetails, setSelectedPointDetails] = useState(null);
     useEffect(
@@ -61,7 +61,7 @@ const PointDetailsPopup = ({ point, show, onHide }) => {
                             color2={'#ffd700'}
                             className='rating' />
                         <Button onClick={onHide}>Close</Button>
-                        {user && user.id === point.userid && <Button onClick={onHide}>Edit</Button>}
+                        {user && user.id === point.userid && <Button onClick={()=>{onEdit(point)}}>Edit</Button>}
                         {user && user.id === point.userid && <Button onClick={async () => {
                             await _pointService.deletePoint(point.id, user?.sid);
                             onHide();

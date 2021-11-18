@@ -7,13 +7,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import initUserManager from "../../../utils/userManager";
 
 
-const AddPointStep1 = ({ selection, pointTypes, next }) => {
+const AddPointStep1 = ({ selection, pointTypes, next, point }) => {
     const user = initUserManager(useSelector, useDispatch).getUser();
-    
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [pointTypeId, setPointTypeId] = useState(1);
-
+    const [name, setName] = useState(point ? point.title : "");
+    const [description, setDescription] = useState(point ? point.description : "");
+    const [pointTypeId, setPointTypeId] = useState(point ? point.typeid : 1);
     const [validated, setValidated] = useState(false);
 
     const getIconUrl = _ => {        
@@ -41,7 +39,7 @@ const AddPointStep1 = ({ selection, pointTypes, next }) => {
         <>
             <Form validated={validated} >
 
-                <Form.Control type="text" placeholder={"lat: " + (selection && selection.lat) + " lng: " + (selection && selection.lng)} readOnly />
+                <Form.Control type="text" placeholder={"lat: " + (selection?.lat || point?.lat) + " lng: " + (selection?.lng || point?.lng)} readOnly />
                 <Form.Group md="4" controlId="validationCustom01" >
                     <Form.Control onChange={e => setName(e.target.value)}
                         as="input"
@@ -69,7 +67,7 @@ const AddPointStep1 = ({ selection, pointTypes, next }) => {
 
                 <Row>
                     <Col column="lg" lg={1}>
-                        {pointTypes && <Image className="point-icon" src={getIconUrl()} />}
+                        {pointTypes && <Image className="point-icon" src={point?.url || getIconUrl()} />}
                     </Col>
                     <Col>
                         <Form.Select aria-label="Floating label select example" onChange={e => setPointTypeId(e.target.value)}>
@@ -88,17 +86,23 @@ const AddPointStep1 = ({ selection, pointTypes, next }) => {
                         event.stopPropagation();
                         setValidated(true);
                     } else {
-                        let point = { title: name, lat: selection.lat, lng: selection.lng, typeid: pointTypeId, description: description };
-                        point = await _pointServece.addPoint(user ? user.sid : null, point);
-                        point.url = getIconUrl()
+                        let point1 = { title: name, lat: selection.lat, lng: selection.lng, typeid: pointTypeId, description: description };
+                        if(point){                            
+                            //point1 = await _pointServece.updatePoint(user.sid, point.id, point1);
+                        }else{
+                            point1 = await _pointServece.addPoint(user.sid, point1);
+                        }
+                        
+                        point1.url = getIconUrl()
                         resetValues();                
                         //onHide(point);
-                        next(point);
+                        next(point1);
                     }
                 }
             }>
-                Submit
+                Save
             </Button>
+            {point && <Button variant="primary" onClick={()=> next(point)}>Next</Button>}
         </>
     );
 }
