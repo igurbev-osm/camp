@@ -10,10 +10,9 @@ const Menu = () => {
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
-                        className="me-auto my-2 my-lg-0"
-                        style={{ maxHeight: '100px' }}
+                        className="me-auto my-2 my-lg-0"                       
                         navbarScroll
-                    >                        
+                    >                      
                         <Nav.Link href="#action2" className="navBarLink">My Points</Nav.Link>
 
                         <Form className="d-flex ">
@@ -26,10 +25,8 @@ const Menu = () => {
                             />
                             <Button variant="outline-success" className="navBarButton" size="sm" >Search</Button>
                         </Form>    
-                    </Nav>
-                    
+                    </Nav>                    
                     <AuthHeader />
-
                 </Navbar.Collapse>
             </Container>
         </Navbar>

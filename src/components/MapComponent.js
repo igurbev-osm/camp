@@ -9,8 +9,8 @@ import { mapConfig, googleMapConfig } from '../config/config';
 import AddPointPopup from './popups/AddPointPopup';
 import PointDetailsPopup from './popups/PointDetailsPopup';
 
-function MapComponent(props) {
-  const userManager = initUserManager(useSelector, useDispatch);
+function MapComponent({pointTypes}) {  
+  const user = initUserManager(useSelector, useDispatch).getUser();
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [modalShow, setModalShow] = useState(false);
@@ -24,11 +24,11 @@ function MapComponent(props) {
 
 
   return (<> {isLoaded && <GoogleMap
-    mapContainerStyle={{ width: 'calc(100%)', height: '600px' }}
+    mapContainerStyle={mapConfig.size}
     center={mapConfig.center}
     zoom={mapConfig.zoom}
     onClick={e => {
-      if (userManager.sid) {
+      if (user) {
         setSelection({ lat: e.latLng.lat(), lng: e.latLng.lng() });
         setModalShow(true);
       }
@@ -36,7 +36,6 @@ function MapComponent(props) {
     onBoundsChanged={() => {
       (
         async () => {
-
           if (!reloadConf.isRequestStart) {
             reloadConf.currentBounds = map.getBounds();
             reloadConf.isRequestStart = true;
@@ -47,7 +46,6 @@ function MapComponent(props) {
               reloadConf.reloadInterval = reloadConf.nextStepInterval;
             }, reloadConf.reloadInterval);
           }
-
         }
       )();
     }}
@@ -74,22 +72,19 @@ function MapComponent(props) {
       onHide={()=>{
         setSelectedPoint(null)
       }}
-      pointtypes={props.pointTypes}
-      sid={userManager.sid || null}
-
+      pointTypes={pointTypes}
     />}
 
     <AddPointPopup
       show={modalShow}
       onHide={(point) => {
-        if (point) {
-          setMarkers(markers.concat([point]));
-        }
+        // if (point) {
+        //   setMarkers(markers.concat([point]));
+        // }
         setModalShow(false);
       }}
       selection={currentSelection}
-      pointtypes={props.pointTypes}
-      sid={userManager.sid || null}
+      pointTypes={pointTypes}      
     />
   </>)
 }

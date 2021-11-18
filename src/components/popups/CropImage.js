@@ -4,8 +4,7 @@ import { Button } from "react-bootstrap";
 import getCroppedImg from "../../utils/cropImage";
 import _uploadService from "../../server/upload";
 
-const CropImage = (props) => {
-    const { imageSrc, imageName, onUpload, point, sid } = { ...props };
+const CropImage = ({ imageSrc, imageName, onUpload, point, sid }) => {    
 
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);   

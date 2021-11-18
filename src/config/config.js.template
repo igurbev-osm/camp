@@ -1,6 +1,7 @@
 export const mapConfig = {
         zoom: 7,        
-        center: {lat: 42.645234602964514, lng: 25.017259689118312}
+        center: {lat: 42.645234602964514, lng: 25.017259689118312},
+        size: { width: 'calc(100%)', height: '600px' },
 }
 
 export const serviceConfig = {
@@ -8,6 +9,7 @@ export const serviceConfig = {
 }
 
 export const googleMapConfig = {
+        googleClientId: "672108875979-0ips6gr56qkm87n8f808ql9hg7r5ve65.apps.googleusercontent.com",,
         googleMapsApiKey: "AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
 }
 

@@ -5,36 +5,39 @@ import "./PointDetailsPopup.scss";
 import _pointService from "../../server/point";
 import { serviceConfig } from "../../config/config.js";
 
-const PointDetailsPopup = (props) => {
-    const { point, pointtypes, sid } = { ...props }
+import { useSelector, useDispatch } from 'react-redux';
+import initUserManager from "../../utils/userManager";
+
+const PointDetailsPopup = ({ point, show, onHide }) => {
+    const user = initUserManager(useSelector, useDispatch).getUser();
     const [selectedPointDetails, setSelectedPointDetails] = useState(null);
     useEffect(
         () => {
             (async () => {
-                setSelectedPointDetails(await _pointService.getPoint(sid, point.id));
+                setSelectedPointDetails(await _pointService.getPoint(user ? user.sid : null, point.id));
             })();
-        }, []
+        }, [user, point]
     );
 
     return (
         <>
             {selectedPointDetails && <>
                 <Modal
-                    {...props}
+                    show={show}
                     dialogClassName="modal-90w"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
                 >
-                    <Modal.Header closeButton>
+                    <Modal.Header >
                         <Modal.Title id="contained-modal-title-vcenter" style={{ textAlign: "center" }}>
-                        <Image src={selectedPointDetails.url} style={{marginRight: "10px"}}/>
+                            <Image src={selectedPointDetails.url} style={{ marginRight: "10px" }} />
                             {selectedPointDetails.title}
                         </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>                       
-                         
+                    <Modal.Body>
+
                         <p>
-                        
+
                             {selectedPointDetails.description}
                         </p>
                         <Carousel>
@@ -52,12 +55,20 @@ const PointDetailsPopup = (props) => {
                             count={5}
                             half={true}
                             value={4.5}
-                            slide = {false}
+                            slide={false}
                             edit={false}
                             size={30}
                             color2={'#ffd700'}
                             className='rating' />
-                        <Button onClick={props.onHide}>Close</Button>
+                        <Button onClick={onHide}>Close</Button>
+                        {user && user.id === point.userid && <Button onClick={onHide}>Edit</Button>}
+                        {user && user.id === point.userid && <Button onClick={async () => {
+                            await _pointService.deletePoint(point.id, user?.sid);
+                            onHide();
+                        }
+                        }>Delete</Button>}
+
+
                     </Modal.Body>
                 </Modal>
                 {selectedPointDetails && <p>{selectedPointDetails.error}</p>}

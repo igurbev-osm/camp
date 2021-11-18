@@ -6,15 +6,19 @@ import "./AddPointStep2.scss";
 import _uploadService from "../../../server/upload";
 import { addPointCoing } from "../../../config/config";
 
-const AddPointStep2 = (props) => {
-    const {next, point, sid } = { ...props };
+import { useSelector, useDispatch } from 'react-redux';
+import initUserManager from "../../../utils/userManager";
+
+
+const AddPointStep2 = ({next, point }) => {
+    const user = initUserManager(useSelector, useDispatch).getUser();    
 
     const [imageData, setImageData] = useState(null);
     const [uploadedList, setUploadedList] = useState([]);
 
     const onUploaded = async (poitId)=>{
         setImageData(null);
-        const pointImages = await _uploadService.getImages(point.id, sid);
+        const pointImages = await _uploadService.getImages(point.id, user ? user.sid : null);
         if(pointImages && addPointCoing.maxImagesPerPoint > pointImages.length){
             setUploadedList(pointImages);
         }else{
@@ -43,7 +47,7 @@ const AddPointStep2 = (props) => {
                     imageName={imageData.name}
                     onUpload={onUploaded}
                     point={point}
-                    {...props}
+                    sid={user ? user.sid : null}
                 />
                 </div>}
             </Form>

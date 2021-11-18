@@ -9,10 +9,7 @@ import AddPointStep2 from "./addSteps/AddPointStep2";
 import {addPointCoing} from "../../config/config"
 
 
-function AddPointPopup(props) {
-      
-    const {onHide } = { ...props }; 
-    
+function AddPointPopup({onHide, selection, pointTypes, show}) {    
     const [step, setStep] = useState(1);
     const [point, setPoint] = useState(null);
  
@@ -28,7 +25,7 @@ function AddPointPopup(props) {
 
     return (
         <Modal className='modal'
-            {...props}
+            show={show}
             dialogClassName="modal-90w"
             aria-labelledby="contained-modal-title-vcenter"
             centered
@@ -36,15 +33,15 @@ function AddPointPopup(props) {
                 setStep(1);
                 onHide(point);}}
         >
-            <Modal.Header closeButton>
+            <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter" className="modal-title-text" >
                     Good, now lets do some work!
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
               
-              {step === 1 && <AddPointStep1 {...props} next={next} />}
-              {step === 2 && <AddPointStep2  {...props} next={next} point={point} />}
+              {step === 1 && <AddPointStep1 pointTypes={pointTypes} selection={selection} next={next} />}
+              {step === 2 && <AddPointStep2  next={next} point={point} />}
 
 
             </Modal.Body>

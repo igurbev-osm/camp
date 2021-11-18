@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { Modal, Button, Form, Image, Row, Col } from "react-bootstrap";
-import { Next } from "react-bootstrap/esm/PageItem";
+import { Button, Form, Image, Row, Col } from "react-bootstrap";
 import _pointServece from "../../../server/point";
 import "./AddPointStep1.scss";
 
+import { useSelector, useDispatch } from 'react-redux';
+import initUserManager from "../../../utils/userManager";
 
-const AddPointStep1 = (props) => {
-   
-    const { selection, pointtypes, sid, next } = { ...props };
+
+const AddPointStep1 = ({ selection, pointTypes, next }) => {
+    const user = initUserManager(useSelector, useDispatch).getUser();
+    
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [pointTypeId, setPointTypeId] = useState(1);
@@ -15,7 +17,7 @@ const AddPointStep1 = (props) => {
     const [validated, setValidated] = useState(false);
 
     const getIconUrl = _ => {        
-        const f = pointtypes.find(t => t.id === (!isNaN(pointTypeId) ? Number(pointTypeId) : pointTypeId));
+        const f = pointTypes.find(t => t.id === (!isNaN(pointTypeId) ? Number(pointTypeId) : pointTypeId));
         if (f) {
             return f.url;
         }
@@ -67,11 +69,11 @@ const AddPointStep1 = (props) => {
 
                 <Row>
                     <Col column="lg" lg={1}>
-                        {pointtypes && <Image className="point-icon" src={getIconUrl()} />}
+                        {pointTypes && <Image className="point-icon" src={getIconUrl()} />}
                     </Col>
                     <Col>
                         <Form.Select aria-label="Floating label select example" onChange={e => setPointTypeId(e.target.value)}>
-                            {pointtypes && pointtypes.map((type) => {
+                            {pointTypes && pointTypes.map((type) => {
                                 return <option key={type.id} value={type.id}>{type.name}</option>
                             })}
                         </Form.Select>
@@ -87,7 +89,7 @@ const AddPointStep1 = (props) => {
                         setValidated(true);
                     } else {
                         let point = { title: name, lat: selection.lat, lng: selection.lng, typeid: pointTypeId, description: description };
-                        point = await _pointServece.addPoint(sid, point);
+                        point = await _pointServece.addPoint(user ? user.sid : null, point);
                         point.url = getIconUrl()
                         resetValues();                
                         //onHide(point);
