@@ -6,16 +6,17 @@ const Menu = () => {
     return (
         <Navbar bg="light" expand="lg" className="navBar">
             <Container fluid>
-                <Navbar.Brand href="#" className="navBarLogo"><Image src="/img/CamPointLogo3.png" className="logoNavBar" /></Navbar.Brand>
+                <Navbar.Brand href="/" className="navBarLogo"><Image src="/img/CamPointLogo3.png" className="logoNavBar" /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
                         className="me-auto my-2 my-lg-0"                       
                         navbarScroll
                     >                      
-                        <Nav.Link href="#action2" className="navBarLink">My Points</Nav.Link>
+                        {/* <Nav.Link href="#action2" className="navBarLink">My Points</Nav.Link> */}
+                        <Button id="myPoints" variant="outline-success" className="navBarButton" size="sm" >My Points</Button>
 
-                        <Form className="d-flex ">
+                        <Form className="d-flex">
                             <FormControl
                                 type="search"
                                 placeholder="Find a place"
@@ -23,7 +24,7 @@ const Menu = () => {
                                 aria-label="Search"
                                 size="sm"
                             />
-                            <Button variant="outline-success" className="navBarButton" size="sm" >Search</Button>
+                            <Button id="search" variant="outline-success" className="navBarButton" size="sm" >Search</Button>
                         </Form>    
                     </Nav>                    
                     <AuthHeader />
