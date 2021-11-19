@@ -8,6 +8,7 @@ import initUserManager from "../../../utils/userManager";
 
 
 const AddPointStep1 = ({ selection, pointTypes, next, point }) => {
+    selection = selection || point;
     const user = initUserManager(useSelector, useDispatch).getUser();
     const [name, setName] = useState(point ? point.title : "");
     const [description, setDescription] = useState(point ? point.description : "");
@@ -39,7 +40,7 @@ const AddPointStep1 = ({ selection, pointTypes, next, point }) => {
         <>
             <Form validated={validated} >
 
-                <Form.Control type="text" placeholder={"lat: " + (selection?.lat || point?.lat) + " lng: " + (selection?.lng || point?.lng)} readOnly />
+                <Form.Control type="text" placeholder={`lat: ${selection.lat} lng: ${selection.lng}`} readOnly />
                 <Form.Group md="4" controlId="validationCustom01" >
                     <Form.Control onChange={e => setName(e.target.value)}
                         as="input"
@@ -67,7 +68,7 @@ const AddPointStep1 = ({ selection, pointTypes, next, point }) => {
 
                 <Row>
                     <Col column="lg" lg={1}>
-                        {pointTypes && <Image className="point-icon" src={point?.url || getIconUrl()} />}
+                        {pointTypes && <Image className="point-icon" src={getIconUrl()} />}
                     </Col>
                     <Col>
                         <Form.Select aria-label="Floating label select example" onChange={e => setPointTypeId(e.target.value)}>
@@ -86,17 +87,18 @@ const AddPointStep1 = ({ selection, pointTypes, next, point }) => {
                         event.stopPropagation();
                         setValidated(true);
                     } else {
-                        let point1 = { title: name, lat: selection.lat, lng: selection.lng, typeid: pointTypeId, description: description };
-                        if(point){                            
-                            //point1 = await _pointServece.updatePoint(user.sid, point.id, point1);
+                        let newPoint = { title: name, lat: selection.lat, lng: selection.lng, typeid: pointTypeId, description: description };
+                        if(point){  
+                            newPoint = await _pointServece.updatePoint(user.sid, {...point, ...newPoint});
+                            
                         }else{
-                            point1 = await _pointServece.addPoint(user.sid, point1);
+                            newPoint = await _pointServece.addPoint(user.sid, newPoint);
                         }
                         
-                        point1.url = getIconUrl()
+                        newPoint.url = getIconUrl()
                         resetValues();                
                         //onHide(point);
-                        next(point1);
+                        next(newPoint);
                     }
                 }
             }>

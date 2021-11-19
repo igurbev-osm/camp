@@ -43,14 +43,21 @@ const server = {
     },
 
     deletePoint: async function(pointId, sid){
-        if(!sid || "undefined" === sid){
-            throw Error("Missing sid");
-        }
+        
         const url = `${serviceConfig.serviceUrl}/api/dpoint/${sid ? sid : 0}/${pointId}`;
         try {
             return checkResult((await axios.delete(url)).data);
         } catch (e) {
             return { error: e.message };
+        }
+    },
+
+    updatePoint: async function(sid,point){
+        const url = `${serviceConfig.serviceUrl}/api/epoint/${sid}`;
+        try{
+            return checkResult(await axios.post(url, point));
+        }catch(e){
+            return {error: e.message}
         }
     }
 }

@@ -18,7 +18,6 @@ const PointDetailsPopup = ({ point, show, onHide, onEdit }) => {
             })();
         }, [user, point]
     );
-
     return (
         <>
             {selectedPointDetails && <>
