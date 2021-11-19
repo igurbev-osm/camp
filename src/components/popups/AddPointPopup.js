@@ -9,7 +9,7 @@ import AddPointStep2 from "./addSteps/AddPointStep2";
 import {addPointCoing} from "../../config/config"
 
 
-function AddPointPopup({onHide, selection, pointTypes, show}) {    
+function AddPointPopup({onHide, selection, pointTypes, show, selectedPoint}) {    
     const [step, setStep] = useState(1);
     const [point, setPoint] = useState(null);
  
@@ -40,7 +40,7 @@ function AddPointPopup({onHide, selection, pointTypes, show}) {
             </Modal.Header>
             <Modal.Body>
               
-              {step === 1 && <AddPointStep1 pointTypes={pointTypes} selection={selection} next={next} />}
+              {step === 1 && <AddPointStep1 pointTypes={pointTypes} selection={selection} next={next} point={selectedPoint} />}
               {step === 2 && <AddPointStep2  next={next} point={point} />}
 
 

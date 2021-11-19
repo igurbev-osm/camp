@@ -22,7 +22,6 @@ function MapComponent({pointTypes}) {
     googleMapsApiKey: googleMapConfig.googleMapsApiKey
   });
 
-
   return (<> {isLoaded && <GoogleMap
     mapContainerStyle={mapConfig.size}
     center={mapConfig.center}
@@ -55,7 +54,7 @@ function MapComponent({pointTypes}) {
   >
 
     {markers.map((mark, index) => <Marker
-      onClick={(function () {
+      onClick={(function () {        
         setSelectedPoint(this);
       }).bind(mark)}
       key={mark.id}
@@ -66,11 +65,16 @@ function MapComponent({pointTypes}) {
   </GoogleMap>
   }
 
-    {!!selectedPoint && <PointDetailsPopup
+    {!!selectedPoint && !modalShow && <PointDetailsPopup
       show={!!selectedPoint}
       point={selectedPoint}
       onHide={()=>{
         setSelectedPoint(null)
+      }}
+      onEdit={async (point)=>{
+        point = await _pointService.getPoint(user.sid, point.id);
+        setSelectedPoint(point);
+        setModalShow(true)
       }}
       pointTypes={pointTypes}
     />}
@@ -83,6 +87,7 @@ function MapComponent({pointTypes}) {
         // }
         setModalShow(false);
       }}
+      selectedPoint={selectedPoint}
       selection={currentSelection}
       pointTypes={pointTypes}      
     />
