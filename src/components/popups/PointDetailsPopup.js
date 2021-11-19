@@ -39,7 +39,7 @@ const PointDetailsPopup = ({ point, show, onHide, onEdit }) => {
 
                             {selectedPointDetails.description}
                         </p>
-                        <Carousel>
+                        <Carousel interval={null}>
                             {selectedPointDetails.images.map(img => (
                                 <Carousel.Item key={img.id}>
                                     <img
@@ -54,7 +54,6 @@ const PointDetailsPopup = ({ point, show, onHide, onEdit }) => {
                             count={5}
                             half={true}
                             value={4.5}
-                            slide={false}
                             edit={false}
                             size={30}
                             color2={'#ffd700'}

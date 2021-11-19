@@ -15,15 +15,15 @@ const AddPointStep1 = ({ selection, pointTypes, next, point }) => {
     const [pointTypeId, setPointTypeId] = useState(point ? point.typeid : 1);
     const [validated, setValidated] = useState(false);
 
-    const getIconUrl = _ => {        
+    const getIconUrl = _ => {
         const f = pointTypes.find(t => t.id === (!isNaN(pointTypeId) ? Number(pointTypeId) : pointTypeId));
         if (f) {
             return f.url;
         }
         return null;
     }
-    const checkValidity = _ => {        
-        return (           
+    const checkValidity = _ => {
+        return (
             name && name.length >= 4
             && description && description.length > 10
         );
@@ -34,7 +34,7 @@ const AddPointStep1 = ({ selection, pointTypes, next, point }) => {
         setDescription("");
         setPointTypeId(1);
         setValidated(false);
-    }    
+    }
 
     return (
         <>
@@ -76,6 +76,146 @@ const AddPointStep1 = ({ selection, pointTypes, next, point }) => {
                                 return <option key={type.id} value={type.id}>{type.name}</option>
                             })}
                         </Form.Select>
+                    </Col>
+                </Row>
+                <Row style={{ paddingTop: "20px" }}>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/drinking_water.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="drinking water" />
+                    </Col>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/water.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="water suply" />
+                    </Col>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/campfire.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="fire place" />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/lighting.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="lighting" />
+                    </Col>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/electricity.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="electricity" />
+                    </Col>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/shed.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="shed" />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/tree.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="tree" />
+                    </Col>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/forest.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="forest" />
+                    </Col>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/road.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="road access" />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/wc.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="WC" />
+                    </Col>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/table.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="table" />
+                    </Col>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/bench.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="bench" />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/4g.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="4G" />
+                    </Col>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/quiet.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="quiet" />
+                    </Col>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/trash.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="trash bin" />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/tourist.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="tourism" />
+                    </Col>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/bike.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="biking" />
+                    </Col>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/fish.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="fishing" />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/kids.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="okay for kids" />
+                    </Col>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/dog.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="okay for dogs" />
+                    </Col>
+                    <Col sm="1" className="cbx-col-sm">
+                        <Image className="cbx-icon" src="/img/checkbox/view.png" />
+                    </Col>
+                    <Col sm="3" className="cbx-col-lg">
+                        <Form.Check className="cbx-label" type="checkbox" label="view" />
                     </Col>
                 </Row>
 

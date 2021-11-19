@@ -29,22 +29,19 @@
         font-family: 'Roboto Condensed', sans-serif;
         font-weight: 700!important;
         color: #366c56!important;
-        // font-size: 20px!important;
         font-stretch: ultra-condensed;
+        align-self: center;
+        height: 30px;
     
         &:hover {
             background-color: #e9f5f7!important;
         }
     }
     
-    button{
+    .d-flex {
         align-self: center;
         height: 30px;
-    }
-
-    input {
-        align-self: center;
-        height: 30px;
+        padding-left: 200px;
     }
 }
 
