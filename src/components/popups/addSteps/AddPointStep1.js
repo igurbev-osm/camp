@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Image, Row, Col } from "react-bootstrap";
 import _pointServece from "../../../server/point";
 import "./AddPointStep1.scss";
+import CheckboxPnl from "./CheckboxPnl";
 
 import { useSelector, useDispatch } from 'react-redux';
 import initUserManager from "../../../utils/userManager";
@@ -66,7 +67,7 @@ const AddPointStep1 = ({ selection, pointTypes, next, point }) => {
                     </Form.Control.Feedback>
                 </Form.Group>
 
-                <Row>
+                <Row style={{ paddingBottom: "20px" }}>
                     <Col column="lg" lg={1}>
                         {pointTypes && <Image className="point-icon" src={getIconUrl()} />}
                     </Col>
@@ -78,147 +79,7 @@ const AddPointStep1 = ({ selection, pointTypes, next, point }) => {
                         </Form.Select>
                     </Col>
                 </Row>
-                <Row style={{ paddingTop: "20px" }}>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/drinking_water.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="drinking water" />
-                    </Col>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/water.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="water suply" />
-                    </Col>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/campfire.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="fire place" />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/lighting.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="lighting" />
-                    </Col>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/electricity.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="electricity" />
-                    </Col>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/shed.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="shed" />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/tree.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="tree" />
-                    </Col>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/forest.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="forest" />
-                    </Col>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/road.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="road access" />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/wc.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="WC" />
-                    </Col>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/table.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="table" />
-                    </Col>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/bench.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="bench" />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/4g.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="4G" />
-                    </Col>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/quiet.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="quiet" />
-                    </Col>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/trash.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="trash bin" />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/tourist.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="tourism" />
-                    </Col>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/bike.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="biking" />
-                    </Col>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/fish.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="fishing" />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/kids.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="okay for kids" />
-                    </Col>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/dog.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="okay for dogs" />
-                    </Col>
-                    <Col sm="1" className="cbx-col-sm">
-                        <Image className="cbx-icon" src="/img/checkbox/view.png" />
-                    </Col>
-                    <Col sm="3" className="cbx-col-lg">
-                        <Form.Check className="cbx-label" type="checkbox" label="view" />
-                    </Col>
-                </Row>
-
+                <CheckboxPnl />
             </Form>
             <Button variant="primary" onClick={
                 async (event) => {
@@ -228,15 +89,15 @@ const AddPointStep1 = ({ selection, pointTypes, next, point }) => {
                         setValidated(true);
                     } else {
                         let newPoint = { title: name, lat: selection.lat, lng: selection.lng, typeid: pointTypeId, description: description };
-                        if(point){  
-                            newPoint = await _pointServece.updatePoint(user.sid, {...point, ...newPoint});
-                            
-                        }else{
+                        if (point) {
+                            newPoint = await _pointServece.updatePoint(user.sid, { ...point, ...newPoint });
+
+                        } else {
                             newPoint = await _pointServece.addPoint(user.sid, newPoint);
                         }
-                        
+
                         newPoint.url = getIconUrl()
-                        resetValues();                
+                        resetValues();
                         //onHide(point);
                         next(newPoint);
                     }
@@ -244,7 +105,7 @@ const AddPointStep1 = ({ selection, pointTypes, next, point }) => {
             }>
                 Save
             </Button>
-            {point && <Button variant="primary" onClick={()=> next(point)}>Next</Button>}
+            {point && <Button variant="primary" onClick={() => next(point)}>Next</Button>}
         </>
     );
 }
