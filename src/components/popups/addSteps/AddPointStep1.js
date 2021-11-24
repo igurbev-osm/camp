@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Form, Image, Row, Col } from "react-bootstrap";
 import _pointServece from "../../../server/point";
+import { SessionContext } from "../../../utils/session";
 import "./AddPointStep1.scss";
 import CheckboxPnl from "./CheckboxPnl";
 
-import { useSelector, useDispatch } from 'react-redux';
-import initUserManager from "../../../utils/userManager";
 
 
 const AddPointStep1 = ({ selection, pointTypes, next, point }) => {
     selection = selection || point;
-    const user = initUserManager(useSelector, useDispatch).getUser();
+    const sid = useContext(SessionContext);
     const [name, setName] = useState(point ? point.title : "");
     const [description, setDescription] = useState(point ? point.description : "");
     const [pointTypeId, setPointTypeId] = useState(point ? point.typeid : 1);
@@ -90,10 +89,10 @@ const AddPointStep1 = ({ selection, pointTypes, next, point }) => {
                     } else {
                         let newPoint = { title: name, lat: selection.lat, lng: selection.lng, typeid: pointTypeId, description: description };
                         if (point) {
-                            newPoint = await _pointServece.updatePoint(user.sid, { ...point, ...newPoint });
+                            newPoint = await _pointServece.updatePoint(sid, { ...point, ...newPoint });
 
                         } else {
-                            newPoint = await _pointServece.addPoint(user.sid, newPoint);
+                            newPoint = await _pointServece.addPoint(sid, newPoint);
                         }
 
                         newPoint.url = getIconUrl()

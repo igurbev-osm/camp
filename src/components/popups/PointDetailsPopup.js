@@ -1,23 +1,33 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Modal, Button, Carousel, Image } from "react-bootstrap";
 import ReactStars from 'react-stars'
 import "./PointDetailsPopup.scss";
 import _pointService from "../../server/point";
+import _userService from "../../server/user";
 import { serviceConfig } from "../../config/config.js";
 
-import { useSelector, useDispatch } from 'react-redux';
-import initUserManager from "../../utils/userManager";
 import InfoPnl from './addSteps/InfoPnl';
+import { SessionContext } from '../../utils/session';
 
 const PointDetailsPopup = ({ point, show, onHide, onEdit }) => {
-    const user = initUserManager(useSelector, useDispatch).getUser();
+    
+    const sid = useContext(SessionContext);
+    const [user, setUser] = useState(null);
+
     const [selectedPointDetails, setSelectedPointDetails] = useState(null);
     useEffect(
         () => {
             (async () => {
-                setSelectedPointDetails(await _pointService.getPoint(user ? user.sid : null, point.id));
+                setSelectedPointDetails(await _pointService.getPoint(sid, point.id));
             })();
-        }, [user, point]
+            (async() => {
+                if(sid){
+                    setUser(await _userService.getUserInfo(sid));
+                }
+            }
+
+            )();
+        }, [sid, point]
     );
     return (
         <>
@@ -63,7 +73,7 @@ const PointDetailsPopup = ({ point, show, onHide, onEdit }) => {
                         <Button onClick={onHide}>Close</Button>
                         {user && user.id === point.userid && <Button onClick={() => { onEdit(point) }}>Edit</Button>}
                         {user && user.id === point.userid && <Button onClick={async () => {
-                            await _pointService.deletePoint(point.id, user?.sid);
+                            await _pointService.deletePoint(point.id, sid);
                             onHide();
                         }
                         }>Delete</Button>}

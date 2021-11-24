@@ -1,16 +1,21 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import _pointService from "../server/point";
-import { useSelector, useDispatch } from 'react-redux';
-import initUserManager from "../utils/userManager";
+
 import { reloadConf } from "../utils/reloadConfig"
 
 import { mapConfig, googleMapConfig } from '../config/config';
 import AddPointPopup from './popups/AddPointPopup';
 import PointDetailsPopup from './popups/PointDetailsPopup';
+import { SessionContext } from '../utils/session';
+import DialogContainer from './popups/dialogContainer/DialogContaiter';
+import AddedPointPopup from './popups/AddedPointPopup';
+import AddEditPointForm from './popups/dialogContent/AddEditPointForm';
+import UploadForm from './popups/dialogContent/UploadForm';
+import CheckboxPnl from './popups/addSteps/CheckboxPnl';
 
-function MapComponent({pointTypes}) {  
-  const user = initUserManager(useSelector, useDispatch).getUser();
+function MapComponent({ pointTypes }) {
+  const sid = useContext(SessionContext);
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [modalShow, setModalShow] = useState(false);
@@ -21,15 +26,14 @@ function MapComponent({pointTypes}) {
     id: 'google-map-script',
     googleMapsApiKey: googleMapConfig.googleMapsApiKey
   });
-
   return (<> {isLoaded && <GoogleMap
     mapContainerStyle={mapConfig.size}
     center={mapConfig.center}
     zoom={mapConfig.zoom}
     onClick={e => {
-      if (user) {
+      if (sid) {
         setSelection({ lat: e.latLng.lat(), lng: e.latLng.lng() });
-        setModalShow(true);
+        setModalShow(true);     
       }
     }}
     onBoundsChanged={() => {
@@ -54,7 +58,7 @@ function MapComponent({pointTypes}) {
   >
 
     {markers.map((mark, index) => <Marker
-      onClick={(function () {        
+      onClick={(function () {
         setSelectedPoint(this);
       }).bind(mark)}
       key={mark.id}
@@ -68,18 +72,31 @@ function MapComponent({pointTypes}) {
     {!!selectedPoint && !modalShow && <PointDetailsPopup
       show={!!selectedPoint}
       point={selectedPoint}
-      onHide={()=>{
+      onHide={() => {
         setSelectedPoint(null)
       }}
-      onEdit={async (point)=>{
-        point = await _pointService.getPoint(user.sid, point.id);
+      onEdit={async (point) => {
+        point = await _pointService.getPoint(sid, point.id);
         setSelectedPoint(point);
         setModalShow(true)
       }}
       pointTypes={pointTypes}
     />}
 
-    <AddPointPopup
+{modalShow && currentSelection &&    <DialogContainer
+      show={modalShow}
+      onHide={(point) => {
+        if (point) {
+          setMarkers(markers.concat([point]));
+        }
+        setModalShow(false);
+      }} 
+      initQueue={[AddEditPointForm, UploadForm, CheckboxPnl]}
+      initData={currentSelection}
+      title={"Add point popup"}
+      />}
+
+    {/* <AddPointPopup
       show={modalShow}
       onHide={(point) => {
         // if (point) {
@@ -89,8 +106,8 @@ function MapComponent({pointTypes}) {
       }}
       selectedPoint={selectedPoint}
       selection={currentSelection}
-      pointTypes={pointTypes}      
-    />
+      pointTypes={pointTypes}
+    /> */}
   </>)
 }
 

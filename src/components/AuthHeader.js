@@ -3,28 +3,35 @@ import GoogleLogin, { GoogleLogout } from "react-google-login";
 import _userService from "../server/user";
 import "./AuthHeader.scss";
 import { googleMapConfig } from "../config/config";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { SessionContext, setSessionCookie } from "../utils/session"
 
-import { useSelector, useDispatch } from 'react-redux';
-import initUserManager from "../utils/userManager";
-
-const AuthHeader = () => {
-
-    const userManager = initUserManager(useSelector, useDispatch);
+const AuthHeader = ({ setSession }) => {
+    const sid = useContext(SessionContext);
     const [user, setUser] = useState(null);
-    useEffect(() => {
-        (
-            async () => {
-                setUser(await userManager.getUserAsync());
+
+    useEffect(() =>{
+        (async () => {
+            if (sid) {
+                const userInfo = await _userService.getUserInfo(sid);
+                setUser(userInfo);
             }
-        )();
-    });
+        })()},[]
+      );
 
     const login = async (params) => {
         const userInfo = await _userService.login(params);
         if (!userInfo.error) {
-            userManager.setUser(userInfo);
+            setSessionCookie(userInfo.sid);
+            setUser(userInfo);
+            setSession(userInfo.sid);
         }
+    }
+
+    const logout = () => {
+        setSessionCookie(null);
+        setUser(null);
+        setSession(null);
     }
 
     return (
@@ -39,7 +46,7 @@ const AuthHeader = () => {
                             buttonText="Logout"
                             className="googleText"
                             theme="light"
-                            onLogoutSuccess={_ => userManager.setUser(null)} /></NavDropdown.Item>
+                            onLogoutSuccess={logout} /></NavDropdown.Item>
                     </NavDropdown>
                 </>
                 :

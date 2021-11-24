@@ -2,7 +2,7 @@ import { Navbar, Container, Nav,  Form, FormControl, Button, Image } from "react
 import AuthHeader from "./AuthHeader";
 import "./Menu.scss";
 
-const Menu = () => {
+const Menu = ({setSession}) => {
     return (
         <Navbar bg="light" expand="lg" className="navBar">
             <Container fluid>
@@ -27,7 +27,7 @@ const Menu = () => {
                             <Button id="search" variant="outline-success" className="navBarButton" size="sm" >Search</Button>
                         </Form>    
                     </Nav>                    
-                    <AuthHeader />
+                    <AuthHeader setSession={setSession}/>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

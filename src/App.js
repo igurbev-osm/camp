@@ -1,25 +1,13 @@
 import React from 'react';
 import Main from './components/Main';
-import { Container, Row, Col } from 'react-bootstrap';
-import Menu from "./components/Menu";
+
 import "./App.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const App = () => {  
+const App = () => {
   return (
-    <Container className="container">
-      <Row>
-        <Col>
-          <Menu />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Main />
-        </Col>
-      </Row>
-    </Container>
-  )
+    <Main />
+  );
 }
 
 export default App

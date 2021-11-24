@@ -2,13 +2,14 @@ import React, { useContext, useState } from "react";
 import {Form} from "react-bootstrap";
 import { readFile } from "../../../utils/cropImage";
 import CropImage from "../CropImage";
-import "./AddPointStep2.scss";
+import "../addSteps/AddPointStep2.scss";
 import _uploadService from "../../../server/upload";
 import { addPointCoing } from "../../../config/config";
 import { SessionContext } from "../../../utils/session";
+import Button from "@restart/ui/esm/Button";
 
+const UploadForm = ({ point, addStack, done }) => {
 
-const AddPointStep2 = ({next, point }) => {
     const sid = useContext(SessionContext);
 
     const [imageData, setImageData] = useState(null);
@@ -20,13 +21,13 @@ const AddPointStep2 = ({next, point }) => {
         if(pointImages && addPointCoing.maxImagesPerPoint > pointImages.length){
             setUploadedList(pointImages);
         }else{
-           next();
+           done(point);
         }
     }
 
     return (
         <>
-            <Form className="upload-form">
+        <Form className="upload-form">
                 <Form.Group controlId="formFileSm" className="mb-3 uploadFile">
                     <Form.Label>Select Image to upload</Form.Label>
                     <Form.Control type="file" size="sm" onChange={async (e) => {
@@ -49,9 +50,9 @@ const AddPointStep2 = ({next, point }) => {
                 />
                 </div>}
             </Form>
-            
-        </>
+            <Button onClick={e => done(point)}>Next</Button>
+            </>
     );
 }
 
-export default AddPointStep2;
+export default UploadForm;

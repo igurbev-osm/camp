@@ -1,7 +1,8 @@
+import Button from "@restart/ui/esm/Button";
 import { Row } from "react-bootstrap";
 import Checkbox from "./Checkbox";
 
-const CheckboxPnl = () => {
+const CheckboxPnl = ({ point, addStack, done }) => {
 
     const cbxServices = [
         {
@@ -88,6 +89,7 @@ const CheckboxPnl = () => {
                     <Checkbox key={img.id} img={img} />
                 ))}
             </Row>
+            <Button onClick={e => done(point)}>Next</Button>
         </>
     )
 }
