@@ -1,15 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import _pointService from "../server/point";
-
-import { reloadConf } from "../utils/reloadConfig"
-
+import { reloadConf } from "../utils/reloadConfig";
 import { mapConfig, googleMapConfig } from '../config/config';
-import AddPointPopup from './popups/AddPointPopup';
 import PointDetailsPopup from './popups/PointDetailsPopup';
 import { SessionContext } from '../utils/session';
 import DialogContainer from './popups/dialogContainer/DialogContaiter';
-import AddedPointPopup from './popups/AddedPointPopup';
 import AddEditPointForm from './popups/dialogContent/AddEditPointForm';
 import UploadForm from './popups/dialogContent/UploadForm';
 import CheckboxPnl from './popups/addSteps/CheckboxPnl';
@@ -94,20 +90,7 @@ function MapComponent({ pointTypes }) {
       initQueue={[AddEditPointForm, UploadForm, CheckboxPnl]}
       initData={currentSelection}
       title={"Add point popup"}
-      />}
-
-    {/* <AddPointPopup
-      show={modalShow}
-      onHide={(point) => {
-        // if (point) {
-        //   setMarkers(markers.concat([point]));
-        // }
-        setModalShow(false);
-      }}
-      selectedPoint={selectedPoint}
-      selection={currentSelection}
-      pointTypes={pointTypes}
-    /> */}
+      />}   
   </>)
 }
 
