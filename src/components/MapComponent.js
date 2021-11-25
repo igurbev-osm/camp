@@ -88,7 +88,7 @@ function MapComponent({ pointTypes }) {
         }
         setModalShow(false);
       }} 
-      initQueue={[AddEditPointForm,  FacilityForm, UploadForm]}
+      initQueue={[AddEditPointForm, FacilityForm, UploadForm]}
       initData={currentSelection}
       title={"Add point popup"}
       />}   

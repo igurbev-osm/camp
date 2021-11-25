@@ -5,9 +5,15 @@
     width: 100%;
     border-top: solid;
     border-width: 1px;
+    flex-wrap: wrap;
 
     .facility-icon {
-        margin: 5px;
+        margin: 5px;        
+    }
+    .cbx-icon {
+        height: 25px;
+        width: 25px;
+        // padding: 7px;
     }
 }
 

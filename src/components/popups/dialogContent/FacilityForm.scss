@@ -5,9 +5,12 @@
     width: 100%;
     position: relative;
     flex-wrap: wrap;
-    border-top: solid;
-    border-width: 1px;
+    border: solid;
+    margin-bottom: 3px;
+    border-radius: 10px;
+    border-color: white;
     padding-top: 10px;
+    padding: 10px;
 
     .facility-checkbox{
         flex: 0 0 33.333333%;
