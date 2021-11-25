@@ -2,12 +2,12 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Modal, Button, Carousel, Image } from "react-bootstrap";
 import ReactStars from 'react-stars'
 import "./PointDetailsPopup.scss";
-import _pointService from "../../server/point";
-import _userService from "../../server/user";
-import { serviceConfig } from "../../config/config.js";
+import _pointService from "../../../server/point";
+import _userService from "../../../server/user";
+import { serviceConfig } from "../../../config/config.js";
 
-import InfoPnl from './addSteps/InfoPnl';
-import { SessionContext } from '../../utils/session';
+import FacilityIcons from '../../facility/FacilityIcons';
+import { SessionContext } from '../../../utils/session';
 
 const PointDetailsPopup = ({ point, show, onHide, onEdit }) => {
     
@@ -69,7 +69,7 @@ const PointDetailsPopup = ({ point, show, onHide, onEdit }) => {
                             size={30}
                             color2={'#ffd700'}
                             className='rating' />
-                        <InfoPnl />
+                        <FacilityIcons />
                         <Button onClick={onHide}>Close</Button>
                         {user && user.id === point.userid && <Button onClick={() => { onEdit(point) }}>Edit</Button>}
                         {user && user.id === point.userid && <Button onClick={async () => {

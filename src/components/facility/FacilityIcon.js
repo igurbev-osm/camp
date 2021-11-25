@@ -1,24 +1,24 @@
-import { Image, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Image, OverlayTrigger, Tooltip } from "react-bootstrap";
 
-const Info = ({ img }) => {
+const FacilityIcon = ({ title, url, className }) => {
 
     return (
         <>
-            <Col sm="1" className="cbx-col-sm">
+            <div className={className}>
                 <OverlayTrigger
                     placement='bottom'
                     overlay={
                         <Tooltip id={`tooltip-bottom`}>
-                            {img.title}
+                            {title}
                         </Tooltip>
                     }
                 >
-                    <Image className="cbx-icon" src={img.url} />
+                    <Image className="cbx-icon" src={url} />
                 </OverlayTrigger>
 
-            </Col>
+            </div>
         </>
     )
 }
 
-export default Info;
+export default FacilityIcon;

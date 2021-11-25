@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import _pointServece from "../server/point";
+import _pointServece from "../../server/point";
 import { Row, Col, Image, Form } from "react-bootstrap";
 
 const PointTypesDropdown = ({ initTypeId, onChange }) => {

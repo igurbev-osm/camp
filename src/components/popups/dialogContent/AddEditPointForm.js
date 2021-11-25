@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import _pointServece from "../../../server/point";
 import { SessionContext } from "../../../utils/session";
-import PointTypesDropdown from "../../PointTypesDropdown";
+import PointTypesDropdown from "../../sub/PointTypesDropdown";
 
 const AddEditPointForm = ({ point, addStack, done }) => {
 
@@ -88,8 +88,7 @@ const AddEditPointForm = ({ point, addStack, done }) => {
                 </Row>
 
                 <PointTypesDropdown initTypeId={point.typeId || 1} onChange={(pointType) => { setPointType(pointType) }} />
-                <Button variant="primary" type="submit"> Save </Button>
-                {point.id && <Button variant="primary" onClick={() => done(point)}>Next</Button>}
+                <Button variant="primary" type="submit"> Next </Button>                
             </Container>
         </Form>
     );

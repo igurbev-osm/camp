@@ -3,7 +3,7 @@ import React, { useState} from "react";
 import MapComponent from "./MapComponent";
 import { SessionContext, getSessionCookie } from "../utils/session";
 import { Container, Row, Col } from 'react-bootstrap';
-import Menu from "./Menu";
+import Menu from "./menu/Menu";
 
 function Main() {
 

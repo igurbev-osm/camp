@@ -1,0 +1,15 @@
+.facility-box{
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 5px;
+    width: 100%;
+    position: relative;
+    flex-wrap: wrap;
+    border-top: solid;
+    border-width: 1px;
+    padding-top: 10px;
+
+    .facility-checkbox{
+        flex: 0 0 33.333333%;
+    }
+}

@@ -1,7 +1,8 @@
-import { Row } from "react-bootstrap";
-import Info from "./Info";
+import {Button} from "react-bootstrap";
+import "./FacilityForm.scss";
+import FacilityCheckbox from "../../facility/FacilityCheckbox";
 
-const InfoPnl = () => {
+const FacilityForm = ({ point, addStack, done }) => {
 
     const cbxServices = [
         {
@@ -77,19 +78,21 @@ const InfoPnl = () => {
     ]
 
     return (
-        <>
-            <Row style={{ paddingBottom: "5px" }}>
+        <div>
+           
+            <div className="facility-box" >
                 {cbxServices.map(img => (
-                    <Info key={img.id} img={img} />
+                    <FacilityCheckbox key={img.id} title={img.title} url={img.url} />
                 ))}
-            </Row>
-            <Row>
+            </div>
+            <div className="facility-box" >
                 {cbxActivities.map(img => (
-                    <Info key={img.id} img={img} />
+                    <FacilityCheckbox key={img.id} title={img.title} url={img.url}/>
                 ))}
-            </Row>
-        </>
+            </div>
+            <Button onClick={e => done(point)}>Next</Button>
+        </div>
     )
 }
 
-export default InfoPnl;
+export default FacilityForm;

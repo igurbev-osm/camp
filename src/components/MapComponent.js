@@ -3,12 +3,13 @@ import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import _pointService from "../server/point";
 import { reloadConf } from "../utils/reloadConfig";
 import { mapConfig, googleMapConfig } from '../config/config';
-import PointDetailsPopup from './popups/PointDetailsPopup';
+import PointDetailsPopup from './popups/pointDetails/PointDetailsPopup';
 import { SessionContext } from '../utils/session';
 import DialogContainer from './popups/dialogContainer/DialogContaiter';
 import AddEditPointForm from './popups/dialogContent/AddEditPointForm';
 import UploadForm from './popups/dialogContent/UploadForm';
-import CheckboxPnl from './popups/addSteps/CheckboxPnl';
+import FacilityCheckbox from './facility/FacilityCheckbox';
+import FacilityForm from './popups/dialogContent/FacilityForm';
 
 function MapComponent({ pointTypes }) {
   const sid = useContext(SessionContext);
@@ -87,7 +88,7 @@ function MapComponent({ pointTypes }) {
         }
         setModalShow(false);
       }} 
-      initQueue={[AddEditPointForm, UploadForm, CheckboxPnl]}
+      initQueue={[AddEditPointForm,  FacilityForm, UploadForm]}
       initData={currentSelection}
       title={"Add point popup"}
       />}   

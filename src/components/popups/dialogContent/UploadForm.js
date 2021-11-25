@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import {Form, Button} from "react-bootstrap";
 import { readFile } from "../../../utils/cropImage";
-import CropImage from "../CropImage";
+import CropImage from "../../sub/CropImage";
 import "../addSteps/AddPointStep2.scss";
 import _uploadService from "../../../server/upload";
 import { addPointCoing } from "../../../config/config";

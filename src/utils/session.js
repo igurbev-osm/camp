@@ -13,12 +13,7 @@ export const setSessionCookie = (session) => {
 
 export const getSessionCookie = () => {
     const cookies = new Cookies();
-    const sessionCookie = cookies.get("sid");
-    if (sessionCookie === undefined) {
-        return {};
-    } else {
-        return JSON.parse(sessionCookie);
-    }
+    return cookies.get("sid");    
 };
 
 export const SessionContext = createContext(getSessionCookie());

@@ -1,8 +1,7 @@
-import Button from "@restart/ui/esm/Button";
-import { Row } from "react-bootstrap";
-import Checkbox from "./Checkbox";
+import FacilityIcon from "./FacilityIcon";
+import "./facility.scss"
 
-const CheckboxPnl = ({ point, addStack, done }) => {
+const FacilityIcons = () => {
 
     const cbxServices = [
         {
@@ -79,19 +78,18 @@ const CheckboxPnl = ({ point, addStack, done }) => {
 
     return (
         <>
-            <Row style={{ paddingBottom: "5px" }}>
+            <div className="facility-block" >
                 {cbxServices.map(img => (
-                    <Checkbox key={img.id} img={img} />
+                    <FacilityIcon key={img.id} title={img.title} url={img.url} className="facility-icon" />
                 ))}
-            </Row>
-            <Row>
+            </div>
+            <div className="facility-block" >
                 {cbxActivities.map(img => (
-                    <Checkbox key={img.id} img={img} />
+                    <FacilityIcon key={img.id} title={img.title} url={img.url} className="facility-icon" />
                 ))}
-            </Row>
-            <Button onClick={e => done(point)}>Next</Button>
+            </div>
         </>
     )
 }
 
-export default CheckboxPnl;
+export default FacilityIcons;
