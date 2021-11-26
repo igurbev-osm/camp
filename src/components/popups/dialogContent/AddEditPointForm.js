@@ -6,7 +6,7 @@ import PointTypesDropdown from "../../sub/PointTypesDropdown";
 
 const AddEditPointForm = ({ point, addStack, done }) => {
 
-    const sid = useContext(SessionContext);    
+    const sid = useContext(SessionContext);
     const [pointType, setPointType] = useState({ id: point.typeId, url: point.url });
 
     const onSubmit = async (event) => {
@@ -46,51 +46,56 @@ const AddEditPointForm = ({ point, addStack, done }) => {
     }
 
     return (
-        <Form onSubmit={onSubmit}>
-            <Container>
-                <Row>
-                    <Col>
-                        <Form.Control type="text" placeholder={`lat: ${point.lat} lng: ${point.lng}`} readOnly />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <Form.Group md="4" >
-                            <Form.Control
-                            name="title"
-                                as="input"
-                                required
-                                placeholder="Place your Point Name here"
-                                defaultValue={point.title}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Please provide a valid point name.
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <Form.Group md="4" controlId="validationCustom02" >
-                            <Form.Control
-                                as="textarea"
-                                name="description"
-                                required
-                                placeholder="Place your Description here"
-                                style={{ height: '100px' }}
-                                defaultValue={point.description}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Please provide a valid description.
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                    </Col>
-                </Row>
+        <div className="dialog-content-holder">
+            <Form onSubmit={onSubmit} className="add-point-form">
+                <Container>
+                    <Row>
+                        <Col>
+                            <Form.Control type="text" placeholder={`lat: ${point.lat} lng: ${point.lng}`} readOnly />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form.Group md="4" >
+                                <Form.Control
+                                    name="title"
+                                    as="input"
+                                    required
+                                    placeholder="Place your Point Name here"
+                                    defaultValue={point.title}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Please provide a valid point name.
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form.Group md="4" controlId="validationCustom02" >
+                                <Form.Control
+                                    as="textarea"
+                                    name="description"
+                                    required
+                                    placeholder="Place your Description here"
+                                    style={{ height: '100px' }}
+                                    defaultValue={point.description}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Please provide a valid description.
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Col>
+                    </Row>
 
-                <PointTypesDropdown initTypeId={point.typeId || 1} onChange={(pointType) => { setPointType(pointType) }} />
-                <Button variant="primary" type="submit"> Next </Button>                
-            </Container>
-        </Form>
+                    <PointTypesDropdown initTypeId={point.typeId || 1} onChange={(pointType) => { setPointType(pointType) }} />
+
+                </Container>
+                <div className="content-footer">
+                    <Button variant="primary" type="submit" className="next-button" > Next </Button>
+                </div>
+            </Form>
+        </div>
     );
 }
 

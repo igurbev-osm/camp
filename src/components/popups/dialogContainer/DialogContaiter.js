@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
+import "./dialogContainer.scss";
+import "../dialogContent/dialogContent.scss";
 
 const DialogContainer = ({ initQueue, initData, onHide, title, show }) => {
     const [data, setData] = useState(initData);
@@ -32,7 +34,8 @@ const DialogContainer = ({ initQueue, initData, onHide, title, show }) => {
         <>
             {data && <Modal
                 show={show} onHide={onHide}
-                dialogClassName="modal-90w"
+                dialogClassName="modal-90w dialog-container"
+                contentClassName="dialog-content"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
@@ -42,7 +45,7 @@ const DialogContainer = ({ initQueue, initData, onHide, title, show }) => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <ContentComponent done={done} addStack={addStack} point={data} />
+                    <ContentComponent done={done} addStack={addStack} point={data} />                    
                 </Modal.Body>
             </Modal>}
 
