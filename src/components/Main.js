@@ -4,7 +4,7 @@ import MapComponent from "./MapComponent";
 import { SessionContext, getSessionCookie } from "../utils/session";
 import { Container, Row, Col } from 'react-bootstrap';
 import Menu from "./menu/Menu";
-import { BrowserRouter, useParams, Route, Routes} from "react-router-dom";
+import { BrowserRouter, useParams, Route, Routes } from "react-router-dom";
 
 function Main() {
 
@@ -22,8 +22,8 @@ function Main() {
           <Col>
             <BrowserRouter>
               <Routes>
-                <Route path="/point/:pointId/:title" element={ <Child />} />
-                <Route path="/" element={ <MapComponent />} />
+                <Route path="/:viewName/:pointId" element={<Child />} />
+                <Route path="/*" element={<MapComponent />} />
               </Routes>
             </BrowserRouter>
           </Col>
@@ -33,8 +33,14 @@ function Main() {
 }
 
 const Child = () => {
-  let { pointId } = useParams();
-  return <MapComponent pointId={pointId}/>
+  let { pointId, viewName } = useParams();
+  switch (viewName) {
+    case "point":
+      return <MapComponent pointId={pointId} />
+    default:
+      return <MapComponent />;
+  }
+
 }
 
 export default Main;

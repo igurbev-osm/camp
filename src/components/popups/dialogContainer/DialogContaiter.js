@@ -12,9 +12,9 @@ const DialogContainer = ({ initQueue, initData, onHide, title}) => {
 
 
 
-    const done = (result) => {
+    const done = (result, exit) => {
         let step = currentStep;
-        if (step < initQueue.length - 1) {
+        if (!exit && step < initQueue.length - 1) {
             step++;
             setData(result)
             setStep(step)

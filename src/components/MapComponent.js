@@ -88,7 +88,7 @@ function MapComponent({ pointId }) {
                 // setPopupQueue([PointDetailsPopup, AddEditPointForm, FacilityForm, UploadForm]);
                 // setSelection(this);
                 // setShowDetails(true);
-                navigate(`/point/${this.id}/${this.title}`);
+                navigate(`/point/${this.id}`);
 
             }).bind(mark)}
             key={mark.id}
@@ -106,7 +106,7 @@ function MapComponent({ pointId }) {
                     setMarkers(await _pointService.getPoints(0, map.getBounds()));
                 }
                 setShowDetails(false);
-                navigate("/point/0/x")
+                navigate("/map/~")
             }}
             initQueue={popupQueue}
             initData={currentSelection}

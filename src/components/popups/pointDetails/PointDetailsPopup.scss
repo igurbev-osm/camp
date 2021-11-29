@@ -1,35 +1,65 @@
-.modal{
-    .modal-content{
-            background-color: #e9f5f7!important;
-            font-family: 'Roboto Condensed', sans-serif;
-            font-weight: 700!important;
-            color: #366c56!important;
+.dialog-container {
+    .dialog-content{
+   
+           
+    }
+    .modal-content {
+        background-color: #e9f5f7 !important;
+        font-family: "Roboto Condensed", sans-serif;
+        font-weight: 700 !important;
+        color: #366c56 !important;
 
-            .modal-title-text{
-                width: 100%;
-                text-align: center;
-            }
+     
 
-            .modal-body{
+        .modal-title-text {
+            width: 100%;
+            text-align: center;
+        }
 
-                .rating{
-                    padding: 30px 0px 10px 10px;
+        .modal-body {
+            .point-details-popup {
+                .rating {
+                    padding: 0px 0px 00px 0px;
+                    margin: 0;
                 }
-                
-                .btn-primary{
-                    font-family: 'Roboto Condensed', sans-serif;
-                    font-weight: 700!important;
-                    color: #366c56!important;
-                    background-color: #e9f5f7!important;
-                    border-color: #366c56!important;
-                    float: right;
-                    margin-top: 30px;
-                    
-
-                    &:hover {
-                        background-color: #cce6eb!important;
+                .facility-icon {
+                    .cbx-icon {
+                        height: 16px;
+                        width: 16px;
                     }
                 }
+                .point-description-box {
+                    padding: 10px 0px 0px 0px;
+                    min-height: 70px;
+                    margin: 0;
+                    p {
+                        font-size: small;
+                        font-weight: lighter;
+                        margin: 0;
+                        padding: 0;
+                        
+                    }
+                }
+                .facility-block{
+                    padding: 0;
+                }
             }
+
+            .btn-primary {
+                font-family: "Roboto Condensed", sans-serif;
+                font-weight: 700 !important;
+                color: #366c56 !important;
+                background-color: #e9f5f7 !important;
+                border-color: #366c56 !important;
+                float: right;
+                font-size: small;
+                padding: 3px 5px 3px 5px;
+                margin-left: 5px;
+
+                &:hover {
+                    background-color: #cce6eb !important;
+                }
+            }
+        }
     }
 }
