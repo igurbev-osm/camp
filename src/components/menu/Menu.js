@@ -1,8 +1,10 @@
 import { Navbar, Container, Nav,  Form, FormControl, Button, Image } from "react-bootstrap";
+import { useNavigate } from "react-router";
 import AuthHeader from "./AuthHeader";
 import "./Menu.scss";
 
 const Menu = ({setSession}) => {
+    let navigate = useNavigate();
     return (
         <Navbar bg="light" expand="lg" className="navBar">
             <Container fluid>
@@ -14,7 +16,7 @@ const Menu = ({setSession}) => {
                         navbarScroll
                     >                      
                         {/* <Nav.Link href="#action2" className="navBarLink">My Points</Nav.Link> */}
-                        <Button id="myPoints" variant="outline-success" className="navBarButton" size="sm" >My Points</Button>
+                        <Button id="myPoints" variant="outline-success" className="navBarButton" size="sm" onClick={()=> navigate("/mypoints/~")} >My Points</Button>
 
                         <Form className="d-flex">
                             <FormControl

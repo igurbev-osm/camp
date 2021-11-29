@@ -12,23 +12,25 @@ function Main() {
 
   return (
     <SessionContext.Provider value={session}>
-      <Container className="container">
-        <Row>
-          <Col>
-            <Menu setSession={setSession} />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <BrowserRouter>
+      <BrowserRouter>
+        
+          <Container className="container">
+            <Row>
+              <Col>
+                <Menu setSession={setSession} />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
               <Routes>
                 <Route path="/:viewName/:pointId" element={<Child />} />
                 <Route path="/*" element={<MapComponent />} />
-              </Routes>
-            </BrowserRouter>
-          </Col>
-        </Row>
-      </Container>
+                </Routes>
+              </Col>
+            </Row>
+          </Container>
+        
+      </BrowserRouter>
     </SessionContext.Provider>);
 }
 
@@ -37,6 +39,8 @@ const Child = () => {
   switch (viewName) {
     case "point":
       return <MapComponent pointId={pointId} />
+    case "mypoints":
+      return <MapComponent view={viewName} />
     default:
       return <MapComponent />;
   }

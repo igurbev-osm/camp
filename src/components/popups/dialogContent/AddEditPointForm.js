@@ -5,7 +5,6 @@ import { SessionContext } from "../../../utils/session";
 import PointTypesDropdown from "../../sub/PointTypesDropdown";
 
 const AddEditPointForm = ({ point, addStack, done }) => {
-debugger
     const sid = useContext(SessionContext);
     const [pointType, setPointType] = useState({ id: point.typeId, url: point.url });
 

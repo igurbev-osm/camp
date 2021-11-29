@@ -12,7 +12,7 @@ import AddEditPointForm from './popups/dialogContent/AddEditPointForm';
 import { useNavigate } from 'react-router';
 
 
-function MapComponent({ pointId }) {
+function MapComponent({ pointId, view }) {
     const sid = useContext(SessionContext);
     const [map, setMap] = useState(null);
     const [mapCenter, setMapCenter] = useState(mapConfig.center);
@@ -47,7 +47,12 @@ function MapComponent({ pointId }) {
         googleMapsApiKey: googleMapConfig.googleMapsApiKey
     });
 
-
+    const markerOpacity = (marker)=>{        
+        if(view === "mypoints"){
+            return marker.userid == sid ? 1 : 0.3;
+        }
+        return 1;
+    }
 
     return (<> {isLoaded && <GoogleMap
         mapContainerStyle={mapConfig.size}
@@ -83,7 +88,7 @@ function MapComponent({ pointId }) {
         }}
     >
 
-        {markers && markers.map((mark, index) => <Marker
+        {markers && markers.map((mark, index) => <Marker opacity={markerOpacity(mark)}
             onClick={(function () {
                 // setPopupQueue([PointDetailsPopup, AddEditPointForm, FacilityForm, UploadForm]);
                 // setSelection(this);
@@ -102,11 +107,9 @@ function MapComponent({ pointId }) {
         {showDetails && currentSelection && <DialogContainer
 
             onHide={async (point) => {
-                if (point) {
-                    setMarkers(await _pointService.getPoints(0, map.getBounds()));
-                }
+                setMarkers(await _pointService.getPoints(0, map.getBounds()));
                 setShowDetails(false);
-                navigate("/map/~")
+                navigate(`/${view || "map"}/~`)
             }}
             initQueue={popupQueue}
             initData={currentSelection}
