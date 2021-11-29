@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { readFile } from "../../../utils/cropImage";
 import CropImage from "../../sub/CropImage";
@@ -7,8 +7,16 @@ import { addPointCoing } from "../../../config/config";
 import { SessionContext } from "../../../utils/session";
 
 const UploadForm = ({ point, addStack, done }) => {
-
     const sid = useContext(SessionContext);
+
+    useEffect(
+        () => {
+            (async () => {
+                const pointImages = await _uploadService.getImages(point.id, sid);
+                setUploadedList(pointImages);
+            })();
+        }, []
+    );
 
     const [imageData, setImageData] = useState(null);
     const [uploadedList, setUploadedList] = useState([]);
@@ -36,9 +44,11 @@ const UploadForm = ({ point, addStack, done }) => {
 
                         }} />
                     </Form.Group>
+                    <div className="uploaded-list">
                     {uploadedList.map(img => {
-                        return <p key={img.id}> {img.title}</p>
+                        return <li key={img.id}> {img.title}</li>
                     })}
+                    </div>
                     {imageData &&
                         <div className="crop-containter"><CropImage
                             imageSrc={imageData.src}
@@ -50,8 +60,8 @@ const UploadForm = ({ point, addStack, done }) => {
                         </div>}
                 </Form>
                 <div className="content-footer">
-                    <Button variant="primary" type="submit" className="next-button" onClick={(e)=>{
-                        e.preventDefault(); 
+                    <Button variant="primary" type="submit" className="next-button" onClick={(e) => {
+                        e.preventDefault();
                         done(point);
                     }}> Next</Button>
                 </div>

@@ -3,12 +3,12 @@ import "./facility.scss"
 import { useEffect, useState } from "react";
 import _facilityService from "../../server/facility";
 
-const FacilityIcons = () => {
+const FacilityIcons = ({pointId}) => {
 
     const [facilities, setFacilities] = useState(null);
     useEffect(() => {
         (async () => {
-            const fcs = await _facilityService.getFacilities();
+            const fcs = await _facilityService.getPointFacilities(pointId);
             setFacilities(fcs);
         })();
     }, []);

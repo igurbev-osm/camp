@@ -1,4 +1,10 @@
 .dialog-container{
+    .dialog-header{
+        padding: 7px;
+        border:solid;
+        border-color: white;
+        border-radius: 5px;
+    }
     .dialog-content{
         height: 600px;
         max-height: 600px;       

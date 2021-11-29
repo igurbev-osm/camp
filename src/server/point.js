@@ -55,7 +55,7 @@ const server = {
     updatePoint: async function(sid,point){
         const url = `${serviceConfig.serviceUrl}/api/epoint/${sid}`;
         try{
-            return checkResult(await axios.post(url, point));
+            return checkResult((await axios.post(url, point)).data);
         }catch(e){
             return {error: e.message}
         }

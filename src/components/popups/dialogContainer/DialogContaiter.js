@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Image } from "react-bootstrap";
 import "./dialogContainer.scss";
 import "../dialogContent/dialogContent.scss";
 
-const DialogContainer = ({ initQueue, initData, onHide, title, show }) => {
+const DialogContainer = ({ initQueue, initData, onHide, title}) => {
     const [data, setData] = useState(initData);
     const [currentStep, setStep] = useState(0);
     // const [stack, setStack] = useState([]); TODO
@@ -33,17 +33,18 @@ const DialogContainer = ({ initQueue, initData, onHide, title, show }) => {
     return (
         <>
             {data && <Modal
-                show={show} onHide={onHide}
+                show={true} onHide={onHide}
                 dialogClassName="modal-90w dialog-container"
                 contentClassName="dialog-content"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter" style={{ textAlign: "center" }}>
-                        {title}
-                    </Modal.Title>
-                </Modal.Header>
+               <Modal.Header className="dialog-header">
+                        <Modal.Title id="contained-modal-title-vcenter" style={{ textAlign: "center" }}>
+                            <Image src={data.url} style={{ marginRight: "10px" }} />
+                            {data.title}
+                        </Modal.Title>
+                    </Modal.Header>
                 <Modal.Body>
                     <ContentComponent done={done} addStack={addStack} point={data} />                    
                 </Modal.Body>
