@@ -7,7 +7,7 @@ import _userService from "../../../server/user";
 import { serviceConfig } from "../../../config/config.js";
 
 import FacilityIcons from '../../facility/FacilityIcons';
-import { SessionContext } from '../../../utils/session';
+import { SessionContext } from '../../../context/SessionContext';
 import Confirm from '../../sub/Confirm';
 
 const PointDetailsPopup = ({ point, addStack, done }) => {

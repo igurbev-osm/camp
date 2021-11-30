@@ -3,7 +3,7 @@ import "./dialogContent.scss";
 import FacilityCheckbox from "../../facility/FacilityCheckbox";
 import { useContext, useEffect, useState } from "react";
 import _facilityService from "../../../server/facility";
-import { SessionContext } from "../../../utils/session";
+import { SessionContext } from "../../../context/SessionContext";
 
 const FacilityForm = ({ point, addStack, done }) => {
 

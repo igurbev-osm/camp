@@ -4,7 +4,7 @@ import { readFile } from "../../../utils/cropImage";
 import CropImage from "../../sub/CropImage";
 import _uploadService from "../../../server/upload";
 import { addPointCoing } from "../../../config/config";
-import { SessionContext } from "../../../utils/session";
+import { SessionContext } from "../../../context/SessionContext";
 
 const UploadForm = ({ point, addStack, done }) => {
     const sid = useContext(SessionContext);

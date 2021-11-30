@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import _pointServece from "../../../server/point";
-import { SessionContext } from "../../../utils/session";
+import { SessionContext } from "../../../context/SessionContext";
 import PointTypesDropdown from "../../sub/PointTypesDropdown";
 
 const AddEditPointForm = ({ point, addStack, done }) => {

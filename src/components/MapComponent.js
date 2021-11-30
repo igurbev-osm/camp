@@ -4,7 +4,7 @@ import _pointService from "../server/point";
 import { reloadConf } from "../utils/reloadConfig";
 import { mapConfig, googleMapConfig } from '../config/config';
 import PointDetailsPopup from './popups/pointDetails/PointDetailsPopup';
-import { SessionContext } from '../utils/session';
+import { SessionContext } from '../context/SessionContext';
 import DialogContainer from './popups/dialogContainer/DialogContaiter';
 import FacilityForm from './popups/dialogContent/FacilityForm';
 import UploadForm from './popups/dialogContent/UploadForm';
@@ -24,20 +24,20 @@ function MapComponent({ pointId, view }) {
 
     useEffect(
         () => {
-
+            const loadCcontextPoint = async () => {
+                const pointDetails = await _pointService.getPoint(sid, pointId);
+                if (!pointDetails.error) {
+                    setMapCenter({ lat: pointDetails.lat, lng: pointDetails.lng, zoom: 9 });
+                    (function () {
+                        setPopupQueue([PointDetailsPopup, AddEditPointForm, FacilityForm, UploadForm]);
+                        setSelection(this);
+                        setShowDetails(true);
+        
+                    }).bind(pointDetails)();
+                }      
+            }
             if (pointId && pointId !== '0') {
-                (async () => {
-                    const pointDetails = await _pointService.getPoint(sid, pointId);
-                    if (!pointDetails.error) {
-                        setMapCenter({ lat: pointDetails.lat, lng: pointDetails.lng, zoom: 9 });
-                        (function () {
-                            setPopupQueue([PointDetailsPopup, AddEditPointForm, FacilityForm, UploadForm]);
-                            setSelection(this);
-                            setShowDetails(true);
-
-                        }).bind(pointDetails)();
-                    }
-                })();
+                loadCcontextPoint();
             }
         }, [pointId]
     );
@@ -87,7 +87,7 @@ function MapComponent({ pointId, view }) {
     >
 
         {markers && markers.map((mark, index) => <Marker opacity={markerOpacity(mark)}
-            onClick={(function () {               
+            onClick={(function () {
                 navigate(`/point/${this.id}`);
 
             }).bind(mark)}

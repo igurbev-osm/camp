@@ -1,50 +1,47 @@
 import React, { useState } from "react";
-
 import MapComponent from "./MapComponent";
-import { SessionContext, getSessionCookie } from "../utils/session";
+import { SessionContext, getSessionCookie } from "../context/SessionContext";
 import { Container, Row, Col } from 'react-bootstrap';
 import Menu from "./menu/Menu";
 import { BrowserRouter, useParams, Route, Routes } from "react-router-dom";
+import { ViewContext } from "../context/ViewContext";
 
 function Main() {
 
-  const [session, setSession] = useState(getSessionCookie());
+    const [session, setSession] = useState(getSessionCookie());
+    const [view, setView] = useState("map");
 
-  return (
-    <SessionContext.Provider value={session}>
-      <BrowserRouter>
-        
-          <Container className="container">
-            <Row>
-              <Col>
-                <Menu setSession={setSession} />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-              <Routes>
-                <Route path="/:viewName/:pointId" element={<Child />} />
-                <Route path="/*" element={<MapComponent />} />
-                </Routes>
-              </Col>
-            </Row>
-          </Container>
-        
-      </BrowserRouter>
-    </SessionContext.Provider>);
-}
+    const Child = () => {
+        let { pointId, viewName } = useParams();
+        if(viewName !== "point"){
+            setView(viewName);
+        }        
+        return <MapComponent pointId={pointId} view={viewName} />
+    }
+    
+    return (
+        <SessionContext.Provider value={session}>
+            <ViewContext.Provider value={view}>
+                <BrowserRouter>
+                    <Container className="container">
+                        <Row>
+                            <Col>
+                                <Menu setSession={setSession} />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Routes>
+                                    <Route path="/:viewName/:pointId" element={<Child />} />
+                                    <Route path="/*" element={<MapComponent />} />
+                                </Routes>
+                            </Col>
+                        </Row>
+                    </Container>
 
-const Child = () => {
-  let { pointId, viewName } = useParams();
-  // switch (viewName) {
-    // case "point":
-      return <MapComponent pointId={pointId} view={viewName}/>
-    // case "mypoints":
-    //   return <MapComponent view={viewName} />
-    // default:
-    //   return <MapComponent />;
-//  }
-
+                </BrowserRouter>
+            </ViewContext.Provider>
+        </SessionContext.Provider >);
 }
 
 export default Main;

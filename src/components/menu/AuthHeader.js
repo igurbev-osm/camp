@@ -4,7 +4,7 @@ import _userService from "../../server/user";
 import "./AuthHeader.scss";
 import { googleMapConfig } from "../../config/config";
 import { useContext, useEffect, useState } from "react";
-import { SessionContext, setSessionCookie } from "../../utils/session"
+import { SessionContext, setSessionCookie } from "../../context/SessionContext"
 
 const AuthHeader = ({ setSession }) => {
     const sid = useContext(SessionContext);
