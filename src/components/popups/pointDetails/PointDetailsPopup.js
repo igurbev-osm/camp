@@ -94,10 +94,12 @@ const PointDetailsPopup = ({ point, addStack, done }) => {
 
                 <div className="content-footer">
 
-                    {user && user.id === point.userid && <Button onClick={() => {
+                    {sid && point.my && <Button onClick={() => {
                         done(selectedPointDetails || point);
                     }} className="next-button">Edit</Button>}
-                    <Button variant="primary" className="next-button" onClick={() => setShowDeleteConfirm(true)} > Delete </Button>
+                    
+                    {sid && point.my && <Button variant="primary" className="next-button" onClick={() => setShowDeleteConfirm(true)} > Delete </Button>}
+                    
                     <Button variant="primary" className="btn-secondary" onClick={() => done(selectedPointDetails || point, true)} > Close </Button>
                 </div>
 

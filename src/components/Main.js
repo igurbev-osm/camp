@@ -36,14 +36,14 @@ function Main() {
 
 const Child = () => {
   let { pointId, viewName } = useParams();
-  switch (viewName) {
-    case "point":
-      return <MapComponent pointId={pointId} />
-    case "mypoints":
-      return <MapComponent view={viewName} />
-    default:
-      return <MapComponent />;
-  }
+  // switch (viewName) {
+    // case "point":
+      return <MapComponent pointId={pointId} view={viewName}/>
+    // case "mypoints":
+    //   return <MapComponent view={viewName} />
+    // default:
+    //   return <MapComponent />;
+//  }
 
 }
 

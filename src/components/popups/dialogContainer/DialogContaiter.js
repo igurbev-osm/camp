@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Modal, Image } from "react-bootstrap";
 import "./dialogContainer.scss";
 import "../dialogContent/dialogContent.scss";
+import "../dialogContent/AddPointPopup.scss";
 
-const DialogContainer = ({ initQueue, initData, onHide, title}) => {
+const DialogContainer = ({ initQueue, initData, onHide}) => {
     const [data, setData] = useState(initData);
-    const [currentStep, setStep] = useState(0);
-    // const [stack, setStack] = useState([]); TODO
+    const [currentStep, setStep] = useState(0);    
 
     const ContentComponent = initQueue[currentStep];
 

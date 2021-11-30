@@ -47,8 +47,8 @@ function MapComponent({ pointId, view }) {
         googleMapsApiKey: googleMapConfig.googleMapsApiKey
     });
 
-    const markerOpacity = (marker)=>{        
-        if(view === "mypoints"){
+    const markerOpacity = (marker) => {
+        if (view === "mypoints") {
             return marker.my ? 1 : 0.3;
         }
         return 1;
@@ -60,7 +60,7 @@ function MapComponent({ pointId, view }) {
         zoom={mapCenter.zoom || mapConfig.zoom}
         onClick={e => {
             if (sid) {
-                setSelection({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+                setSelection({ lat: e.latLng.lat(), lng: e.latLng.lng(), title: "Add new point", url: "/img/add-point.png" });
                 setPopupQueue([AddEditPointForm, FacilityForm, UploadForm]);
                 setShowDetails(true);
             }
@@ -73,8 +73,6 @@ function MapComponent({ pointId, view }) {
                         reloadConf.isRequestStart = true;
                         setTimeout(async () => {
                             setMarkers(await _pointService.getPoints(sid ? sid : 0, reloadConf.currentBounds));
-
-
                             reloadConf.isRequestStart = false;
                             reloadConf.reloadInterval = reloadConf.nextStepInterval;
                         }, reloadConf.reloadInterval);
@@ -89,10 +87,7 @@ function MapComponent({ pointId, view }) {
     >
 
         {markers && markers.map((mark, index) => <Marker opacity={markerOpacity(mark)}
-            onClick={(function () {
-                // setPopupQueue([PointDetailsPopup, AddEditPointForm, FacilityForm, UploadForm]);
-                // setSelection(this);
-                // setShowDetails(true);
+            onClick={(function () {               
                 navigate(`/point/${this.id}`);
 
             }).bind(mark)}

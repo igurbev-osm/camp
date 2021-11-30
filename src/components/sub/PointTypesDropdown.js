@@ -10,6 +10,7 @@ const PointTypesDropdown = ({ initTypeId, onChange }) => {
         (async () => {
             const types = await _pointServece.getPointTypes();
             setPointTypes(types);
+            debugger
             const defaultType = types.find(t => t.id === Number(initTypeId));
             if(defaultType){
                 onChange({id: defaultType.id, url: defaultType.url});

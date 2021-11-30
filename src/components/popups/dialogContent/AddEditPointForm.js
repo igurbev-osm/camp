@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import _pointServece from "../../../server/point";
 import { SessionContext } from "../../../utils/session";
 import PointTypesDropdown from "../../sub/PointTypesDropdown";
@@ -7,6 +7,7 @@ import PointTypesDropdown from "../../sub/PointTypesDropdown";
 const AddEditPointForm = ({ point, addStack, done }) => {
     const sid = useContext(SessionContext);
     const [pointType, setPointType] = useState({ id: point.typeId, url: point.url });
+
 
     const onSubmit = async (event) => {
         event.preventDefault();
@@ -61,7 +62,7 @@ const AddEditPointForm = ({ point, addStack, done }) => {
                                     as="input"
                                     required
                                     placeholder="Place your Point Name here"
-                                    defaultValue={point.title}
+                                    defaultValue={point.id ? point.title : ""}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     Please provide a valid point name.
@@ -77,7 +78,7 @@ const AddEditPointForm = ({ point, addStack, done }) => {
                                     name="description"
                                     required
                                     placeholder="Place your Description here"
-                                    style={{ height: '100px' }}
+                                    style={{ height: '200px' }}
                                     defaultValue={point.description}
                                 />
                                 <Form.Control.Feedback type="invalid">
@@ -86,12 +87,21 @@ const AddEditPointForm = ({ point, addStack, done }) => {
                             </Form.Group>
                         </Col>
                     </Row>
+                    <Row >
+                        <Col >
+                            <div className="empty-content">
+                                
+                            </div>
+                        </Col>
+                    </Row>
+                    <PointTypesDropdown initTypeId={point.typeid || 1} onChange={(pointType) => { setPointType(pointType) }} />
 
-                    <PointTypesDropdown initTypeId={point.typeId || 1} onChange={(pointType) => { setPointType(pointType) }} />
+                    <Image src="/img/CamPointLogo.png" className="add-point-logo"/>
 
                 </Container>
                 <div className="content-footer">
                     <Button variant="primary" type="submit" className="next-button" > Next </Button>
+                    <Button variant="primary" className="btn-secondary" onClick={() => done(point, true)} > Close </Button>
                 </div>
             </Form>
         </div>
