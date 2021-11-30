@@ -18,9 +18,24 @@
 
         .modal-body {
             .point-details-popup {
-                .rating {
-                    padding: 0px 0px 00px 0px;
-                    margin: 0;
+                
+                .rating-box{
+                    display: flex;
+                    align-items: center;     
+                    margin: 0;               
+                    padding: 0;
+                    min-height: 30px;                    
+
+                    .voted-text{
+                        font-size: small;   
+                        margin-left: 5px;   
+                        margin-top: 2px;
+                    }
+
+                    .rating {
+                        padding: 0px 0px 00px 0px;
+                        margin: 0;
+                    }
                 }
                 .facility-icon {
                     .cbx-icon {
@@ -42,7 +57,9 @@
                 }
                 .facility-block{
                     padding: 0;
-                }
+                    border-color: white;
+                    min-height: 30px;
+                }                
             }
 
             .btn-primary {

@@ -49,7 +49,7 @@ function MapComponent({ pointId, view }) {
 
     const markerOpacity = (marker)=>{        
         if(view === "mypoints"){
-            return marker.userid == sid ? 1 : 0.3;
+            return marker.my ? 1 : 0.3;
         }
         return 1;
     }
@@ -72,7 +72,7 @@ function MapComponent({ pointId, view }) {
                         reloadConf.currentBounds = map.getBounds();
                         reloadConf.isRequestStart = true;
                         setTimeout(async () => {
-                            setMarkers(await _pointService.getPoints(0, reloadConf.currentBounds));
+                            setMarkers(await _pointService.getPoints(sid ? sid : 0, reloadConf.currentBounds));
 
 
                             reloadConf.isRequestStart = false;
@@ -107,7 +107,7 @@ function MapComponent({ pointId, view }) {
         {showDetails && currentSelection && <DialogContainer
 
             onHide={async (point) => {
-                setMarkers(await _pointService.getPoints(0, map.getBounds()));
+                setMarkers(await _pointService.getPoints(sid ? sid : 0, map.getBounds()));
                 setShowDetails(false);
                 navigate(`/${view || "map"}/~`)
             }}

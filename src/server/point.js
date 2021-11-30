@@ -59,6 +59,24 @@ const server = {
         }catch(e){
             return {error: e.message}
         }
+    },
+
+    ratePoint: async function(sid, pointId, value){
+        const url = `${serviceConfig.serviceUrl}/api/rate/${pointId}/${sid}`;
+        try{
+            return checkResult((await axios.post(url, {vote: value})).data);
+        }catch(e){
+            return {error: e.message}
+        }
+    },
+
+    getPointRating: async function(pointId, sid){
+        const url = `${serviceConfig.serviceUrl}/api/rating/${pointId}/${sid ? sid : 0}`;
+        try{
+            return checkResult((await axios.get(url)).data);
+        }catch(e){
+            return {error: e.message}
+        }
     }
 }
 
