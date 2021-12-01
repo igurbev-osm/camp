@@ -74,7 +74,10 @@ function MapComponent({ pointId}) {
                         reloadConf.currentBounds = map.getBounds();
                         reloadConf.isRequestStart = true;
                         setTimeout(async () => {
-                            setMarkers(await _pointService.getPoints(sid ? sid : 0, reloadConf.currentBounds));
+                            const markersList = await _pointService.getPoints(sid ? sid : 0, reloadConf.currentBounds);
+                            if(markersList && markersList.length){
+                                setMarkers(markersList);
+                            }
                             reloadConf.isRequestStart = false;
                             reloadConf.reloadInterval = reloadConf.nextStepInterval;
                         }, reloadConf.reloadInterval);

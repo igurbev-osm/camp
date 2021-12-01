@@ -6,12 +6,13 @@ import PointTypesDropdown from "../../sub/PointTypesDropdown";
 
 const AddEditPointForm = ({ point, addStack, done }) => {
     const sid = useContext(SessionContext);
-    const [pointType, setPointType] = useState({ id: point.id, url: point.url, typeid: point.typeid });
+    const [pointType, setPointType] = useState({ id: point.typeid, url: point.url });
 
+    console.log("point type: ", pointType.id);
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        let newPoint = { lat: point.lat, lng: point.lng, typeid: pointType.id };
+        let newPoint = { lat: point.lat, lng: point.lng, typeid: pointType.id };        
         const form = event.target;
         const formData = new FormData(form);
 

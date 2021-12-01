@@ -9,8 +9,7 @@ const FacilityForm = ({ point, addStack, done }) => {
 
     const sid = useContext(SessionContext);
     const [facilities, setFacilities] = useState(null);
-    useEffect(() => {
-        console.log("useEffect ......... ", point.id);
+    useEffect(() => {       
         (async () => {
             let fcs = await _facilityService.getFacilities();
             if(point.id){

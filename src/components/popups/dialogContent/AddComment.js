@@ -22,6 +22,7 @@ const AddComment = ({ point, addStack, done }) => {
 
     const postComment = async (comment)=>{
         await _pointService.commentPoint(point.id, sid, comment);
+        point.ccount++;
         done(point);
     }
 
