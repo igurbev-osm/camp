@@ -9,6 +9,7 @@ import FacilityIcons from '../../facility/FacilityIcons';
 import { SessionContext } from '../../../context/SessionContext';
 import Confirm from '../../sub/Confirm';
 import AddComment from '../dialogContent/AddComment';
+import Comments from '../dialogContent/Comments';
 
 const PointDetailsPopup = ({ point, addStack, done }) => {
     const sid = useContext(SessionContext);
@@ -18,14 +19,14 @@ const PointDetailsPopup = ({ point, addStack, done }) => {
     const [selectedPointDetails, setSelectedPointDetails] = useState(null);
     useEffect(
         () => {
-            getPointDetails(sid, point.id);   
+            getPointDetails(sid, point.id);
             getPointRating(point.id, sid);
         }, [point.id, sid]
     );
 
     const getPointDetails = async (sid, pointId) => {
         setSelectedPointDetails(await _pointService.getPoint(sid, pointId));
-    }   
+    }
 
     const getPointRating = async (pointId, sid) => {
         setRating(await _pointService.getPointRating(pointId, sid));
@@ -73,6 +74,12 @@ const PointDetailsPopup = ({ point, addStack, done }) => {
                         {rating.value / 2}/{rating.voted}
                     </div>
                     }
+                    <div onClick={() => {                        
+                        addStack(Comments, point);
+                    }}>
+                        <img className="comments-icon" src="/img/comments.png" alt="Comments" />
+                        <span className="voted-text">({point.ccount}) </span>
+                    </div>
                 </div>
                 <div className="point-description-box">
                     <p>
@@ -91,7 +98,7 @@ const PointDetailsPopup = ({ point, addStack, done }) => {
                     }} className="next-button">Edit</Button>}
 
                     {sid && point.my && <Button variant="primary" className="next-button" onClick={() => setShowDeleteConfirm(true)} > Delete </Button>}
-                    
+
                     {sid && <Button variant="primary" className="btn-secondary" onClick={() => addStack(AddComment, selectedPointDetails || point)} > Add Comment </Button>}
                 </div>
 

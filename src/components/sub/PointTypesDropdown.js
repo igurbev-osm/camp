@@ -9,14 +9,9 @@ const PointTypesDropdown = ({ initTypeId, onChange }) => {
     useEffect(() => {
         (async () => {
             const types = await _pointServece.getPointTypes();
-            setPointTypes(types);
-            debugger
-            const defaultType = types.find(t => t.id === Number(initTypeId));
-            if (defaultType) {
-                onChange({ id: defaultType.id, url: defaultType.url });
-            }
+            setPointTypes(types);            
         })()
-    }, [initTypeId, onChange]
+    }, []
     );
 
     const getIconUrl = (tId) => {

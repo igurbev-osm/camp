@@ -45,13 +45,13 @@ const DialogContainer = ({ initQueue, initData, onHide}) => {
 
     return (
         <>
-            {data && <Modal
+            {data && <Modal               
                 show={true} onHide={onHide}
                 dialogClassName="modal-90w dialog-container"
                 contentClassName="dialog-content"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-            >
+            >                
                <Modal.Header className="dialog-header">
                         <Modal.Title id="contained-modal-title-vcenter" style={{ textAlign: "center" }}>
                             <Image src={data.url} style={{ marginRight: "10px" }} />

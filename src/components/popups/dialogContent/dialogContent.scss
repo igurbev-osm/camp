@@ -1,6 +1,15 @@
 .dialog-content-holder{
     position: relative;
     height: 100%;
+
+    .comments-container {
+        display: flex;
+        flex-direction: column;
+        height: 520px;
+        flex: 1;        
+        overflow-y: auto;
+      } 
+
     .content-footer{
         position: absolute;
         bottom: 0;
@@ -13,6 +22,23 @@
     .add-point-form{
         
     }
+
+    .comment-holder{
+        background-color: white;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 10px;
+        .comment-text{
+            font-size: small;
+            margin-bottom: 0;
+            font-weight: 100;
+        }
+        .comment-date{
+            font-size: small;
+            margin-bottom: 0;
+        }
+    }
+
     .dialog-custom-contnet {
         .facility-box {
             display: flex;

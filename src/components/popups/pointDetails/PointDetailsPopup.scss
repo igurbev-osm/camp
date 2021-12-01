@@ -2,7 +2,7 @@
     .dialog-content{
    
            
-    }    
+    }       
     .modal-content {
         background-color: #e9f5f7 !important;
         font-family: "Roboto Condensed", sans-serif;
@@ -36,6 +36,11 @@
                         padding: 0px 0px 00px 0px;
                         margin: 0;
                     }
+                    .comments-icon{
+                        height: 13px;
+                        margin-left: 10px;
+                        cursor: pointer;
+                    }                   
                 }
                 .facility-icon {
                     .cbx-icon {
