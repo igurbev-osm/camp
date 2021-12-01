@@ -3,40 +3,32 @@ import { Button, Carousel } from "react-bootstrap";
 import ReactStars from 'react-rating-stars-component';
 import "./PointDetailsPopup.scss";
 import _pointService from "../../../server/point";
-import _userService from "../../../server/user";
 import { serviceConfig } from "../../../config/config.js";
 
 import FacilityIcons from '../../facility/FacilityIcons';
 import { SessionContext } from '../../../context/SessionContext';
 import Confirm from '../../sub/Confirm';
+import AddComment from '../dialogContent/AddComment';
 
 const PointDetailsPopup = ({ point, addStack, done }) => {
     const sid = useContext(SessionContext);
-    const [user, setUser] = useState(null);
     const [rating, setRating] = useState(null);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
     const [selectedPointDetails, setSelectedPointDetails] = useState(null);
     useEffect(
         () => {
-            getPointDetails();
-            getUserInfo();
-            getPointRating();
-        }, []
+            getPointDetails(sid, point.id);   
+            getPointRating(point.id, sid);
+        }, [point.id, sid]
     );
 
-    const getPointDetails = async () => {
-        setSelectedPointDetails(await _pointService.getPoint(sid, point.id));
-    }
+    const getPointDetails = async (sid, pointId) => {
+        setSelectedPointDetails(await _pointService.getPoint(sid, pointId));
+    }   
 
-    const getUserInfo = async () => {
-        if (sid) {
-            setUser(await _userService.getUserInfo(sid));
-        }
-    }
-
-    const getPointRating = async () => {
-        setRating(await _pointService.getPointRating(point.id, sid));
+    const getPointRating = async (pointId, sid) => {
+        setRating(await _pointService.getPointRating(pointId, sid));
     }
 
     return (
@@ -93,14 +85,14 @@ const PointDetailsPopup = ({ point, addStack, done }) => {
 
 
                 <div className="content-footer">
-
+                    <Button variant="primary" className="btn-secondary" onClick={() => done(selectedPointDetails || point, true)} > Close </Button>
                     {sid && point.my && <Button onClick={() => {
                         done(selectedPointDetails || point);
                     }} className="next-button">Edit</Button>}
-                    
+
                     {sid && point.my && <Button variant="primary" className="next-button" onClick={() => setShowDeleteConfirm(true)} > Delete </Button>}
                     
-                    <Button variant="primary" className="btn-secondary" onClick={() => done(selectedPointDetails || point, true)} > Close </Button>
+                    {sid && <Button variant="primary" className="btn-secondary" onClick={() => addStack(AddComment, selectedPointDetails || point)} > Add Comment </Button>}
                 </div>
 
 

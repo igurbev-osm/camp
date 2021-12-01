@@ -15,7 +15,7 @@ const UploadForm = ({ point, addStack, done }) => {
                 const pointImages = await _uploadService.getImages(point.id, sid);
                 setUploadedList(pointImages);
             })();
-        }, []
+        }, [point.id, sid]
     );
 
     const [imageData, setImageData] = useState(null);

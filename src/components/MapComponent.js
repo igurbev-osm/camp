@@ -10,17 +10,19 @@ import FacilityForm from './popups/dialogContent/FacilityForm';
 import UploadForm from './popups/dialogContent/UploadForm';
 import AddEditPointForm from './popups/dialogContent/AddEditPointForm';
 import { useNavigate } from 'react-router';
+import { ViewContext } from '../context/ViewContext';
 
 
-function MapComponent({ pointId, view }) {
+function MapComponent({ pointId}) {
     const sid = useContext(SessionContext);
     const [map, setMap] = useState(null);
     const [mapCenter, setMapCenter] = useState(mapConfig.center);
     const [markers, setMarkers] = useState([]);
     const [popupQueue, setPopupQueue] = useState(false);
-    const [showDetails, setShowDetails] = useState(false);
+    const [showPopupQueue, setShowPopupQueue] = useState(false);
     const [currentSelection, setSelection] = useState(null);
     let navigate = useNavigate();
+    const {view} = useContext(ViewContext);    
 
     useEffect(
         () => {
@@ -31,7 +33,7 @@ function MapComponent({ pointId, view }) {
                     (function () {
                         setPopupQueue([PointDetailsPopup, AddEditPointForm, FacilityForm, UploadForm]);
                         setSelection(this);
-                        setShowDetails(true);
+                        setShowPopupQueue(true);
         
                     }).bind(pointDetails)();
                 }      
@@ -39,7 +41,7 @@ function MapComponent({ pointId, view }) {
             if (pointId && pointId !== '0') {
                 loadCcontextPoint();
             }
-        }, [pointId]
+        }, [pointId, sid]
     );
 
     const { isLoaded } = useJsApiLoader({
@@ -62,7 +64,7 @@ function MapComponent({ pointId, view }) {
             if (sid) {
                 setSelection({ lat: e.latLng.lat(), lng: e.latLng.lng(), title: "Add new point", url: "/img/add-point.png" });
                 setPopupQueue([AddEditPointForm, FacilityForm, UploadForm]);
-                setShowDetails(true);
+                setShowPopupQueue(true);
             }
         }}
         onBoundsChanged={() => {
@@ -99,11 +101,11 @@ function MapComponent({ pointId, view }) {
     </GoogleMap>}
 
 
-        {showDetails && currentSelection && <DialogContainer
+        {showPopupQueue && currentSelection && <DialogContainer
 
             onHide={async (point) => {
                 setMarkers(await _pointService.getPoints(sid ? sid : 0, map.getBounds()));
-                setShowDetails(false);
+                setShowPopupQueue(false);
                 navigate(`/${view || "map"}/~`)
             }}
             initQueue={popupQueue}

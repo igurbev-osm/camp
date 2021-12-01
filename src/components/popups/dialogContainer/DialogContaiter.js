@@ -6,15 +6,24 @@ import "../dialogContent/AddPointPopup.scss";
 
 const DialogContainer = ({ initQueue, initData, onHide}) => {
     const [data, setData] = useState(initData);
-    const [currentStep, setStep] = useState(0);    
+    const [currentStep, setStep] = useState(0);
+    const [stack, setStack] = useState([]);        
 
-    const ContentComponent = initQueue[currentStep];
-
-
+    const getComponentToShow = () => {
+        if(stack.length > 0){
+            return stack[stack.length - 1];
+        }
+        return initQueue[currentStep];
+    }
 
     const done = (result, exit) => {
-        let step = currentStep;
-        if (!exit && step < initQueue.length - 1) {
+        if(stack.length > 0){
+           const tStack = [...stack];
+           tStack.pop();
+           setStack(tStack); 
+           setData(result);
+        }else if (!exit && currentStep < initQueue.length - 1) {
+            let step = currentStep;
             step++;
             setData(result)
             setStep(step)
@@ -23,13 +32,17 @@ const DialogContainer = ({ initQueue, initData, onHide}) => {
             onHide(result);
             setData(undefined);
         }
-
     }
 
-    const addStack = (componentName, result) => {
-        //TODO
-        console.log(" >>>>>>>>>>>>>>>>> addStack");
+    const addStack = (StackComponent, result) => {
+        const tStack = [...stack];
+        tStack.push(StackComponent);
+        setStack(tStack);
+        setData(result);
     }
+
+    const ContentComponent = getComponentToShow();
+
     return (
         <>
             {data && <Modal

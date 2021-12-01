@@ -12,10 +12,11 @@ const PointTypesDropdown = ({ initTypeId, onChange }) => {
             setPointTypes(types);
             debugger
             const defaultType = types.find(t => t.id === Number(initTypeId));
-            if(defaultType){
-                onChange({id: defaultType.id, url: defaultType.url});
+            if (defaultType) {
+                onChange({ id: defaultType.id, url: defaultType.url });
             }
-        })()}, []
+        })()
+    }, [initTypeId, onChange]
     );
 
     const getIconUrl = (tId) => {
@@ -24,7 +25,7 @@ const PointTypesDropdown = ({ initTypeId, onChange }) => {
             return f.url;
         }
         return null;
-    }
+    }   
 
     return (
         <Row>
@@ -32,15 +33,20 @@ const PointTypesDropdown = ({ initTypeId, onChange }) => {
                 {pointTypes && <Image className="point-icon" src={getIconUrl(pointTypeId)} />}
             </Col>
             <Col>
-                <Form.Select aria-label="Floating label select example" onChange={e => {
-                    const newValue = e.target.value;
-                    setPointTypeId(newValue);
-                    onChange({id: newValue, url: getIconUrl(newValue)});
-                }}>
-                    {pointTypes && pointTypes.map((type) => {
+            {pointTypes && <Form.Select
+                    defaultValue={pointTypeId}
+                    aria-label="Floating label select example" 
+                    onChange={e => {
+                        const newValue = e.target.value;
+                        setPointTypeId(newValue);
+                        onChange({ id: newValue, url: getIconUrl(newValue) });
+                    }}
+
+                >
+                    {pointTypes.map((type) => {
                         return <option key={type.id} value={type.id}>{type.name}</option>
                     })}
-                </Form.Select>
+                </Form.Select>}
             </Col>
         </Row>
     );

@@ -11,7 +11,7 @@ const FacilityIcons = ({pointId}) => {
             const fcs = await _facilityService.getPointFacilities(pointId);
             setFacilities(fcs);
         })();
-    }, []);
+    }, [pointId]);
 
     return (
         <>

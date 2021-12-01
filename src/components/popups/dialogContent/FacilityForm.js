@@ -26,7 +26,7 @@ const FacilityForm = ({ point, addStack, done }) => {
             }
             setFacilities(fcs);
         })();
-    }, []);
+    }, [point.id]);
 
     const onSubmit = async (e) => {
         e.preventDefault();        

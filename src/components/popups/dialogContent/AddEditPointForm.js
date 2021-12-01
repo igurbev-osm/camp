@@ -31,7 +31,6 @@ const AddEditPointForm = ({ point, addStack, done }) => {
 
             newPoint.url = pointType.url;
             resetValues(form);
-            //onHide(point);
             done(newPoint);
         }
     }

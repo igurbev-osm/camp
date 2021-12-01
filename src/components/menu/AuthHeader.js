@@ -16,7 +16,7 @@ const AuthHeader = ({ setSession }) => {
                 const userInfo = await _userService.getUserInfo(sid);
                 setUser(userInfo);
             }
-        })()},[]
+        })()},[sid]
       );
 
     const login = async (params) => {

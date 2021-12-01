@@ -77,6 +77,24 @@ const server = {
         }catch(e){
             return {error: e.message}
         }
+    },
+
+    commentPoint: async function(pointId, sid, comment){
+        const url = `${serviceConfig.serviceUrl}/api/comment/${pointId}/${sid}`;
+        try{
+            return checkResult((await axios.post(url, {comment: comment})).data);
+        }catch(e){
+            return {error: e.message}
+        }
+    },
+
+    getPointComments: async function(pointId, sid){
+        const url = `${serviceConfig.serviceUrl}/api/comments/${pointId}/${sid ? sid : 0}`;
+        try{
+            return checkResult((await axios.get(url)).data);
+        }catch(e){
+            return {error: e.message}
+        }
     }
 }
 

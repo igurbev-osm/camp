@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Navbar, Container, Nav, Form, FormControl, Button, Image } from "react-bootstrap";
+import { Navbar, Container, Nav, Button, Image } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { ViewContext } from "../../context/ViewContext";
 import AuthHeader from "./AuthHeader";
@@ -7,9 +7,9 @@ import "./Menu.scss";
 
 const Menu = ({ setSession }) => {
     let navigate = useNavigate();
-    const view = useContext(ViewContext);
+    const {view, setView} = useContext(ViewContext);
 
-    const newView = view === "map" ? "mypoints" : "map";    
+    //const newView = view === "map" ? "mypoints" : "map";    
 
     return (
         <Navbar bg="light" expand="lg" className="navBar">
@@ -26,19 +26,12 @@ const Menu = ({ setSession }) => {
                             variant="outline-success"
                             className="navBarButton"
                             size="sm"
-                            onClick={() =>navigate(`/${newView}/~`)}
-                        >{newView === "map" ? "All" : "My"} Points</Button>
-
-                        <Form className="d-flex">
-                            <FormControl
-                                type="search"
-                                placeholder="Find a place"
-                                className="me-2"
-                                aria-label="Search"
-                                size="sm"
-                            />
-                            <Button id="search" variant="outline-success" className="navBarButton" size="sm" >Search</Button>
-                        </Form>
+                            onClick={                                
+                                () =>{
+                                    setView(view === "map" ? "mypoints" : "map");
+                                    navigate(`/${view}/~`)}
+                            }
+                        >{view === "map" ? "My" : "All"} Points</Button>
                     </Nav>
                     <AuthHeader setSession={setSession} />
                 </Navbar.Collapse>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MapComponent from "./MapComponent";
 import { SessionContext, getSessionCookie } from "../context/SessionContext";
 import { Container, Row, Col } from 'react-bootstrap';
@@ -12,16 +12,13 @@ function Main() {
     const [view, setView] = useState("map");
 
     const Child = () => {
-        let { pointId, viewName } = useParams();
-        if(viewName !== "point"){
-            setView(viewName);
-        }        
-        return <MapComponent pointId={pointId} view={viewName} />
+        let { pointId} = useParams();       
+        return <MapComponent pointId={pointId} />
     }
     
     return (
         <SessionContext.Provider value={session}>
-            <ViewContext.Provider value={view}>
+            <ViewContext.Provider value={{view, setView}}>
                 <BrowserRouter>
                     <Container className="container">
                         <Row>

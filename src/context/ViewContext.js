@@ -1,3 +1,3 @@
 import { createContext } from "react";
 
-export const ViewContext = createContext("map");
+export const ViewContext = createContext({view:"map", setView : ()=>{}});
