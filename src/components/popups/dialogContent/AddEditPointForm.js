@@ -6,7 +6,7 @@ import PointTypesDropdown from "../../sub/PointTypesDropdown";
 
 const AddEditPointForm = ({ point, addStack, done }) => {
     const sid = useContext(SessionContext);
-    const [pointType, setPointType] = useState({ id: point.typeId, url: point.url });
+    const [pointType, setPointType] = useState({ id: point.id, url: point.url, typeid: point.typeid });
 
 
     const onSubmit = async (event) => {

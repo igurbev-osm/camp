@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import MapComponent from "./MapComponent";
 import { SessionContext, getSessionCookie } from "../context/SessionContext";
 import { Container, Row, Col } from 'react-bootstrap';
