@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
-import _pointServece from "../../server/point";
+import { useContext, useEffect, useState } from "react";
+import _pointServeceF from "../../server/point";
 import { Row, Col, Image, Form } from "react-bootstrap";
+import { SessionContext } from "../../context/SessionContext";
 
 const PointTypesDropdown = ({ initTypeId, onChange }) => {
+    const _axios = useContext(SessionContext);    
+    
     const [pointTypes, setPointTypes] = useState(null);
     const [pointTypeId, setPointTypeId] = useState(initTypeId);
 
     useEffect(() => {
         (async () => {
-            const types = await _pointServece.getPointTypes();
+            const _pointService = (_pointServeceF.bind(_axios))();
+            const types = await _pointService.getPointTypes();
             setPointTypes(types);            
         })()
-    }, []
+    }, [_axios]
     );
 
     const getIconUrl = (tId) => {

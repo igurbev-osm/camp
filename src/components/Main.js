@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import MapComponent from "./MapComponent";
-import { SessionContext, getSessionCookie } from "../context/SessionContext";
+import { SessionContext, initAxios } from "../context/SessionContext";
 import { Container, Row, Col } from 'react-bootstrap';
 import Menu from "./menu/Menu";
 import { BrowserRouter, useParams, Route, Routes } from "react-router-dom";
@@ -8,22 +8,22 @@ import { ViewContext } from "../context/ViewContext";
 
 function Main() {
 
-    const [session, setSession] = useState(getSessionCookie());
+    const [axios, setAxios] = useState(initAxios);
     const [view, setView] = useState("map");
 
     const Child = () => {
-        let { pointId} = useParams();       
-        return <MapComponent pointId={pointId} />
+        let { pointId, viewName} = useParams();       
+        return <MapComponent pointId={pointId} currentView={viewName} />
     }
     
     return (
-        <SessionContext.Provider value={session}>
+        <SessionContext.Provider value={axios}>
             <ViewContext.Provider value={{view, setView}}>
                 <BrowserRouter>
                     <Container className="container">
                         <Row>
                             <Col>
-                                <Menu setSession={setSession} />
+                                <Menu setSession={setAxios} />
                             </Col>
                         </Row>
                         <Row>

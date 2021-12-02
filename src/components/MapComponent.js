@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
-import _pointService from "../server/point";
+import _pointServiceF from "../server/point";
 import { reloadConf } from "../utils/reloadConfig";
 import { mapConfig, googleMapConfig } from '../config/config';
 import PointDetailsPopup from './popups/pointDetails/PointDetailsPopup';
@@ -11,10 +11,12 @@ import UploadForm from './popups/dialogContent/UploadForm';
 import AddEditPointForm from './popups/dialogContent/AddEditPointForm';
 import { useNavigate } from 'react-router';
 import { ViewContext } from '../context/ViewContext';
+import { isLoggedIn } from "../utils/session"
 
 
-function MapComponent({ pointId}) {
-    const sid = useContext(SessionContext);
+function MapComponent({ pointId, currentView }) {
+    const _axios = useContext(SessionContext);
+    const _pointService = (_pointServiceF.bind(_axios))();
     const [map, setMap] = useState(null);
     const [mapCenter, setMapCenter] = useState(mapConfig.center);
     const [markers, setMarkers] = useState([]);
@@ -22,26 +24,24 @@ function MapComponent({ pointId}) {
     const [showPopupQueue, setShowPopupQueue] = useState(false);
     const [currentSelection, setSelection] = useState(null);
     let navigate = useNavigate();
-    const {view} = useContext(ViewContext);    
+    const { view } = useContext(ViewContext);
 
     useEffect(
         () => {
             const loadCcontextPoint = async () => {
-                const pointDetails = await _pointService.getPoint(sid, pointId);
+                const pointService = (_pointServiceF.bind(_axios))();
+                const pointDetails = await pointService.getPoint(pointId);
                 if (!pointDetails.error) {
                     setMapCenter({ lat: pointDetails.lat, lng: pointDetails.lng, zoom: 9 });
-                    (function () {
-                        setPopupQueue([PointDetailsPopup, AddEditPointForm, FacilityForm, UploadForm]);
-                        setSelection(this);
-                        setShowPopupQueue(true);
-        
-                    }).bind(pointDetails)();
-                }      
+                    setPopupQueue([PointDetailsPopup, AddEditPointForm, FacilityForm, UploadForm]);
+                    setSelection(pointDetails);
+                    setShowPopupQueue(pointDetails);
+                }
             }
-            if (pointId && pointId !== '0') {
+            if (currentView === "point" && pointId && pointId !== '0') {
                 loadCcontextPoint();
             }
-        }, [pointId, sid]
+        }, [pointId, _axios, currentView]
     );
 
     const { isLoaded } = useJsApiLoader({
@@ -61,7 +61,7 @@ function MapComponent({ pointId}) {
         center={mapCenter}
         zoom={mapCenter.zoom || mapConfig.zoom}
         onClick={e => {
-            if (sid) {
+            if (isLoggedIn(_axios)) {
                 setSelection({ lat: e.latLng.lat(), lng: e.latLng.lng(), title: "Add new point", url: "/img/add-point.png" });
                 setPopupQueue([AddEditPointForm, FacilityForm, UploadForm]);
                 setShowPopupQueue(true);
@@ -74,8 +74,8 @@ function MapComponent({ pointId}) {
                         reloadConf.currentBounds = map.getBounds();
                         reloadConf.isRequestStart = true;
                         setTimeout(async () => {
-                            const markersList = await _pointService.getPoints(sid ? sid : 0, reloadConf.currentBounds);
-                            if(markersList && markersList.length){
+                            const markersList = await _pointService.getPoints(reloadConf.currentBounds);
+                            if (markersList && markersList.length) {
                                 setMarkers(markersList);
                             }
                             reloadConf.isRequestStart = false;
@@ -107,7 +107,7 @@ function MapComponent({ pointId}) {
         {showPopupQueue && currentSelection && <DialogContainer
 
             onHide={async (point) => {
-                setMarkers(await _pointService.getPoints(sid ? sid : 0, map.getBounds()));
+                setMarkers(await _pointService.getPoints(map.getBounds()));
                 setShowPopupQueue(false);
                 navigate(`/${view || "map"}/~`)
             }}

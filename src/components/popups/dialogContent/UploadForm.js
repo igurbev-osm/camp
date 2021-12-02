@@ -7,15 +7,15 @@ import { addPointCoing } from "../../../config/config";
 import { SessionContext } from "../../../context/SessionContext";
 
 const UploadForm = ({ point, addStack, done }) => {
-    const sid = useContext(SessionContext);
+    const axios = useContext(SessionContext);
 
     useEffect(
         () => {
             (async () => {
-                const pointImages = await _uploadService.getImages(point.id, sid);
+                const pointImages = await (_uploadService.bind(axios)()).getImages(point.id);
                 setUploadedList(pointImages);
             })();
-        }, [point.id, sid]
+        }, [point.id, axios]
     );
 
     const [imageData, setImageData] = useState(null);
@@ -23,7 +23,7 @@ const UploadForm = ({ point, addStack, done }) => {
 
     const onUploaded = async (poitId) => {
         setImageData(null);
-        const pointImages = await _uploadService.getImages(point.id, sid);
+        const pointImages = await (_uploadService.bind(axios)()).getImages(point.id);
         if (pointImages && addPointCoing.maxImagesPerPoint > pointImages.length) {
             setUploadedList(pointImages);
         } else {
@@ -55,7 +55,6 @@ const UploadForm = ({ point, addStack, done }) => {
                             imageName={imageData.name}
                             onUpload={onUploaded}
                             point={point}
-                            sid={sid}
                         />
                         </div>}
                 </Form>

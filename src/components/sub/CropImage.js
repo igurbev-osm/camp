@@ -23,7 +23,7 @@ const CropImage = ({ imageSrc, imageName, onUpload, point, sid }) => {
             imageSrc,
             croppedAreaPixels
         );
-        await _uploadService.upload(new File([croppedImage], imageName), point.id, sid);        
+        await _uploadService.upload(new File([croppedImage], imageName), point.id);        
         reset();
         onUpload(point.id);        
     };

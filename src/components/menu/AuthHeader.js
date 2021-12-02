@@ -1,22 +1,24 @@
 import { NavDropdown, Image } from "react-bootstrap";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
-import _userService from "../../server/user";
+import _userServiceF from "../../server/user";
 import "./AuthHeader.scss";
 import { googleMapConfig } from "../../config/config";
 import { useContext, useEffect, useState } from "react";
-import { SessionContext, setSessionCookie } from "../../context/SessionContext"
+import { initAxios, SessionContext, setSessionCookie } from "../../context/SessionContext"
+import { isLoggedIn } from "../../utils/session";
 
-const AuthHeader = ({ setSession }) => {
-    const sid = useContext(SessionContext);
+const AuthHeader = ({ setSession: setAxios }) => {
+    const _axios = useContext(SessionContext);
+    const _userService = (_userServiceF.bind(_axios))();
     const [user, setUser] = useState(null);
 
     useEffect(() =>{
         (async () => {
-            if (sid) {
-                const userInfo = await _userService.getUserInfo(sid);
+            if (!user && isLoggedIn(_axios)) {
+                const userInfo = await _userService.getUserInfo();
                 setUser(userInfo);
             }
-        })()},[sid]
+        })()},[_axios, _userService, user]
       );
 
     const login = async (params) => {
@@ -24,14 +26,14 @@ const AuthHeader = ({ setSession }) => {
         if (!userInfo.error) {
             setSessionCookie(userInfo.sid);
             setUser(userInfo);
-            setSession(userInfo.sid);
+            setAxios(initAxios);
         }
     }
 
     const logout = () => {
         setSessionCookie(null);
         setUser(null);
-        setSession(null);
+        setAxios(initAxios);
     }
 
     return (

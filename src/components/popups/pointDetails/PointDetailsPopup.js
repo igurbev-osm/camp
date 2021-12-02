@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Button, Carousel } from "react-bootstrap";
 import ReactStars from 'react-rating-stars-component';
 import "./PointDetailsPopup.scss";
-import _pointService from "../../../server/point";
+import _pointServiceF from "../../../server/point";
 import { serviceConfig } from "../../../config/config.js";
 
 import FacilityIcons from '../../facility/FacilityIcons';
@@ -10,26 +10,29 @@ import { SessionContext } from '../../../context/SessionContext';
 import Confirm from '../../sub/Confirm';
 import AddComment from '../dialogContent/AddComment';
 import Comments from '../dialogContent/Comments';
+import { isLoggedIn } from '../../../utils/session';
 
 const PointDetailsPopup = ({ point, addStack, done }) => {
-    const sid = useContext(SessionContext);
+    const _axios = useContext(SessionContext);    
+    const _pointService = (_pointServiceF.bind(_axios))();
+    const _isLoggedIn = isLoggedIn(_axios);
     const [rating, setRating] = useState(null);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
     const [selectedPointDetails, setSelectedPointDetails] = useState(null);
     useEffect(
         () => {
-            getPointDetails(sid, point.id);
-            getPointRating(point.id, sid);
-        }, [point.id, sid]
+            getPointDetails(point.id);
+            getPointRating(point.id);
+        }, [point.id]
     );
 
-    const getPointDetails = async (sid, pointId) => {
-        setSelectedPointDetails(await _pointService.getPoint(sid, pointId));
+    const getPointDetails = async (pointId) => {
+        setSelectedPointDetails(await _pointService.getPoint(pointId));
     }
 
-    const getPointRating = async (pointId, sid) => {
-        setRating(await _pointService.getPointRating(pointId, sid));
+    const getPointRating = async (pointId) => {
+        setRating(await _pointService.getPointRating(pointId));
     }
 
     return (
@@ -66,7 +69,7 @@ const PointDetailsPopup = ({ point, addStack, done }) => {
                             className='rating'
                             onChange={async (vote) => {
                                 setRating(null);
-                                const newValue = await _pointService.ratePoint(sid, point.id, Math.round(vote * 2));
+                                const newValue = await _pointService.ratePoint(point.id, Math.round(vote * 2));
                                 setRating(newValue);
                             }} />}
 
@@ -93,19 +96,19 @@ const PointDetailsPopup = ({ point, addStack, done }) => {
 
                 <div className="content-footer">
                     <Button variant="primary" className="btn-secondary" onClick={() => done(selectedPointDetails || point, true)} > Close </Button>
-                    {sid && point.my && <Button onClick={() => {
+                    {_isLoggedIn && point.my && <Button onClick={() => {
                         done(selectedPointDetails || point);
                     }} className="next-button">Edit</Button>}
 
-                    {sid && point.my && <Button variant="primary" className="next-button" onClick={() => setShowDeleteConfirm(true)} > Delete </Button>}
+                    {_isLoggedIn && point.my && <Button variant="primary" className="next-button" onClick={() => setShowDeleteConfirm(true)} > Delete </Button>}
 
-                    {sid && <Button variant="primary" className="btn-secondary" onClick={() => addStack(AddComment, selectedPointDetails || point)} > Add Comment </Button>}
+                    {_isLoggedIn && <Button variant="primary" className="btn-secondary" onClick={() => addStack(AddComment, selectedPointDetails || point)} > Add Comment </Button>}
                 </div>
 
 
                 {showDeleteConfirm && <Confirm title={selectedPointDetails.title} onConfirm={() => {
                     (async () => {
-                        await _pointService.deletePoint(point.id, sid);
+                        await _pointService.deletePoint(point.id);
                         setShowDeleteConfirm(false);
                         done(null, true);
                     })();

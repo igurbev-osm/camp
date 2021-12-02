@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
 import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
-import _pointServece from "../../../server/point";
+import _pointServeceF from "../../../server/point";
 import { SessionContext } from "../../../context/SessionContext";
 import PointTypesDropdown from "../../sub/PointTypesDropdown";
 
 const AddEditPointForm = ({ point, addStack, done }) => {
-    const sid = useContext(SessionContext);
+    const _axios = useContext(SessionContext);   
+    const _pointService = (_pointServeceF.bind(_axios))();
     const [pointType, setPointType] = useState({ id: point.typeid, url: point.url });
 
     console.log("point type: ", pointType.id);
@@ -25,9 +26,9 @@ const AddEditPointForm = ({ point, addStack, done }) => {
             //TODO            
         } else {
             if (point.id) {
-                newPoint = await _pointServece.updatePoint(sid, { ...point, ...newPoint });
+                newPoint = await _pointService.updatePoint( { ...point, ...newPoint });
             } else {
-                newPoint = await _pointServece.addPoint(sid, newPoint);
+                newPoint = await _pointService.addPoint( newPoint);
             }
 
             newPoint.url = pointType.url;

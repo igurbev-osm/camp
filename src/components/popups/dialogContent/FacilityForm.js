@@ -7,13 +7,14 @@ import { SessionContext } from "../../../context/SessionContext";
 
 const FacilityForm = ({ point, addStack, done }) => {
 
-    const sid = useContext(SessionContext);
+    const axios = useContext(SessionContext);
     const [facilities, setFacilities] = useState(null);
     useEffect(() => {       
         (async () => {
-            let fcs = await _facilityService.getFacilities();
+            const service = (_facilityService.bind(axios)());
+            let fcs = await service.getFacilities();
             if(point.id){
-                let checked = await _facilityService.getPointFacilities(point.id);
+                let checked = await service.getPointFacilities(point.id);
                 checked = checked.map(f=>f.id);
                 if(checked && checked.length > 0){
                     fcs = fcs.map((f => {
@@ -26,7 +27,7 @@ const FacilityForm = ({ point, addStack, done }) => {
             }
             setFacilities(fcs);
         })();
-    }, [point.id]);
+    }, [point.id, axios]);
 
     const onSubmit = async (e) => {
         e.preventDefault();        
@@ -34,7 +35,7 @@ const FacilityForm = ({ point, addStack, done }) => {
         const formData = new FormData(form);
 
         const facilityIds = formData.getAll("facility");
-        await _facilityService.addRemovePointFacilities(sid, point.id, facilityIds)
+        await (_facilityService.bind(axios)()).addRemovePointFacilities(point.id, facilityIds)
         done(point);
     }
 

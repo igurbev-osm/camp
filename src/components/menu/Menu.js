@@ -5,7 +5,7 @@ import { ViewContext } from "../../context/ViewContext";
 import AuthHeader from "./AuthHeader";
 import "./Menu.scss";
 
-const Menu = ({ setSession }) => {
+const Menu = ({ setSession: setAxios }) => {
     let navigate = useNavigate();
     const {view, setView} = useContext(ViewContext);
 
@@ -33,7 +33,7 @@ const Menu = ({ setSession }) => {
                             }
                         >{view === "map" ? "My" : "All"} Points</Button>
                     </Nav>
-                    <AuthHeader setSession={setSession} />
+                    <AuthHeader setSession={setAxios} />
                 </Navbar.Collapse>
             </Container>
         </Navbar>

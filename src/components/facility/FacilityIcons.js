@@ -1,17 +1,18 @@
 import FacilityIcon from "./FacilityIcon";
 import "./facility.scss"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import _facilityService from "../../server/facility";
+import { SessionContext } from "../../context/SessionContext";
 
 const FacilityIcons = ({ pointId }) => {
-
+    const _axios = useContext(SessionContext);
     const [facilities, setFacilities] = useState(null);
     useEffect(() => {       
             (async () => {
-                const fcs = await _facilityService.getPointFacilities(pointId);
+                const fcs = await (_facilityService.bind(_axios)()).getPointFacilities(pointId);
                 setFacilities(fcs);
             })();
-    }, [pointId]);
+    }, [pointId, _axios],);
 
     return (
         <>
