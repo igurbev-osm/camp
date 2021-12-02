@@ -1,11 +1,14 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import Cropper from 'react-easy-crop';
 import { Button } from "react-bootstrap";
 import getCroppedImg from "../../utils/cropImage";
-import _uploadService from "../../server/upload";
+import _uploadServiceF from "../../server/upload";
+import { SessionContext } from "../../context/SessionContext";
 
 const CropImage = ({ imageSrc, imageName, onUpload, point, sid }) => {    
 
+    const _axios = useContext(SessionContext);
+    const _uploadService = _uploadServiceF.bind(_axios)();
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);   
 

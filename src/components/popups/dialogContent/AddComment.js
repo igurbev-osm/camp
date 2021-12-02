@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import { Col, Container, Form, Image, Row, Button } from "react-bootstrap";
 import { SessionContext } from "../../../context/SessionContext";
-import _pointService from "./../../../server/point";
+import _pointServiceF from "./../../../server/point";
 
 const AddComment = ({ point, addStack, done }) => {
 
-    const sid = useContext(SessionContext);
+    const _axios = useContext(SessionContext);
+   const _pointService = _pointServiceF.bind(_axios)();
     const onSubmit = (e) =>{
         e.preventDefault();        
         const form = e.target;
@@ -21,7 +22,7 @@ const AddComment = ({ point, addStack, done }) => {
     };
 
     const postComment = async (comment)=>{
-        await _pointService.commentPoint(point.id, sid, comment);
+        await _pointService.commentPoint(point.id, comment);
         point.ccount++;
         done(point);
     }

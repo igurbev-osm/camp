@@ -13,7 +13,7 @@ const server = function () {
                 }
             };
             try {
-                return checkResult(await axios.post(`}/api/upload/${pointId}`, data, headers));
+                return checkResult(await axios.post(`/api/upload/${pointId}`, data, headers));
             } catch (e) {
                 console.log("file upload error: ", e);
                 throw new Error("File upload error: " + e.message);

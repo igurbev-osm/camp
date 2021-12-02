@@ -13,8 +13,8 @@ import Comments from '../dialogContent/Comments';
 import { isLoggedIn } from '../../../utils/session';
 
 const PointDetailsPopup = ({ point, addStack, done }) => {
-    const _axios = useContext(SessionContext);    
-    const _pointService = (_pointServiceF.bind(_axios))();
+    const _axios = useContext(SessionContext);
+    
     const _isLoggedIn = isLoggedIn(_axios);
     const [rating, setRating] = useState(null);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -22,18 +22,13 @@ const PointDetailsPopup = ({ point, addStack, done }) => {
     const [selectedPointDetails, setSelectedPointDetails] = useState(null);
     useEffect(
         () => {
-            getPointDetails(point.id);
-            getPointRating(point.id);
-        }, [point.id]
+            const _pointService = (_pointServiceF.bind(_axios))();
+            (async () => {
+                setSelectedPointDetails(await _pointService.getPoint(point.id));
+                setRating(await _pointService.getPointRating(point.id));
+            })();
+        }, [point.id, _axios]
     );
-
-    const getPointDetails = async (pointId) => {
-        setSelectedPointDetails(await _pointService.getPoint(pointId));
-    }
-
-    const getPointRating = async (pointId) => {
-        setRating(await _pointService.getPointRating(pointId));
-    }
 
     return (
         <>
@@ -69,7 +64,7 @@ const PointDetailsPopup = ({ point, addStack, done }) => {
                             className='rating'
                             onChange={async (vote) => {
                                 setRating(null);
-                                const newValue = await _pointService.ratePoint(point.id, Math.round(vote * 2));
+                                const newValue = await (_pointServiceF.bind(_axios))().ratePoint(point.id, Math.round(vote * 2));
                                 setRating(newValue);
                             }} />}
 
@@ -77,7 +72,7 @@ const PointDetailsPopup = ({ point, addStack, done }) => {
                         {rating.value / 2}/{rating.voted}
                     </div>
                     }
-                    <div onClick={() => {                        
+                    <div onClick={() => {
                         addStack(Comments, point);
                     }}>
                         <img className="comments-icon" src="/img/comments.png" alt="Comments" />
@@ -108,7 +103,7 @@ const PointDetailsPopup = ({ point, addStack, done }) => {
 
                 {showDeleteConfirm && <Confirm title={selectedPointDetails.title} onConfirm={() => {
                     (async () => {
-                        await _pointService.deletePoint(point.id);
+                        await (_pointServiceF.bind(_axios))().deletePoint(point.id);
                         setShowDeleteConfirm(false);
                         done(null, true);
                     })();

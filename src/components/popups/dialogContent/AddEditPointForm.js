@@ -7,13 +7,14 @@ import PointTypesDropdown from "../../sub/PointTypesDropdown";
 const AddEditPointForm = ({ point, addStack, done }) => {
     const _axios = useContext(SessionContext);   
     const _pointService = (_pointServeceF.bind(_axios))();
-    const [pointType, setPointType] = useState({ id: point.typeid, url: point.url });
+    const [pointType, setPointType] = useState({ id: (point.typeid || 1), url: point.url });
 
     console.log("point type: ", pointType.id);
 
     const onSubmit = async (event) => {
         event.preventDefault();
         let newPoint = { lat: point.lat, lng: point.lng, typeid: pointType.id };        
+        console.log(">>>>>>>>>> ", newPoint)
         const form = event.target;
         const formData = new FormData(form);
 

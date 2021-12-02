@@ -1,17 +1,18 @@
 import { useContext, useEffect, useState } from "react";
 import { Button} from "react-bootstrap";
 import { SessionContext } from "../../../context/SessionContext";
-import _pointService from "./../../../server/point";
+import _pointServiceF from "./../../../server/point";
 
 const Comments = ({ point, addStack, done }) => {
-    const sid = useContext(SessionContext);
+    const _axios = useContext(SessionContext);    
     const [comments, setComments] = useState([]);
     useEffect(
         () => {
             (async () => {
-                setComments(await _pointService.getPointComments(point.id, sid));
+                const _pointService = _pointServiceF.bind(_axios)();
+                setComments(await _pointService.getPointComments(point.id));
             })();
-        }, [point.id, sid]
+        }, [point.id, _axios]
     );
 
     return (
