@@ -30,7 +30,7 @@
         font-weight: 700!important;
         color: #366c56!important;
         font-stretch: ultra-condensed;
-        align-self: center;
+        
         height: 30px;
     
         &:hover {
@@ -42,6 +42,11 @@
         align-self: center;
         height: 30px;
         padding-left: 200px;
+    }
+
+    .auth-block{
+        display: flex;
+        flex-direction: row;
     }
 }
 

@@ -92,9 +92,8 @@ function MapComponent({ pointId, currentView }) {
     >
 
         {markers && markers.map((mark, index) => <Marker opacity={markerOpacity(mark)}
-            onClick={(function () {
+            onClick={(function (e) {                
                 navigate(`/point/${this.id}`);
-
             }).bind(mark)}
             key={mark.id}
             position={{ lat: mark.lat, lng: mark.lng }}

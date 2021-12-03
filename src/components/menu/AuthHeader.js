@@ -37,12 +37,12 @@ const AuthHeader = ({ setSession: setAxios }) => {
     }
 
     return (
-        <>
+        <div className="auth-block">            
             {user && user.username ?
                 <>
                     <Image src={user.imageurl} roundedCircle={true} className="avatar" />
                     <NavDropdown title={user.username} id="navbarScrollingDropdown" className="googleText">
-                        <NavDropdown.Item href="#action4" className="googleText">Profile</NavDropdown.Item>
+                        
                         <NavDropdown.Item href="#action3" className="googleText"><GoogleLogout
                             clientId={googleMapConfig.googleClientId}
                             buttonText="Logout"
@@ -63,7 +63,7 @@ const AuthHeader = ({ setSession: setAxios }) => {
                     cookiePolicy={'single_host_origin'}
                     style={{ height: '30px' }}
                 />}
-        </>
+        </div>
     );
 }
 
