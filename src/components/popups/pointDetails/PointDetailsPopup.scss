@@ -106,12 +106,39 @@
 
         &:hover {
             background-color: #cce6eb !important;
-        }
-
-       
-    }
-    
+        }      
+    }    
 }
+
+.alert-confirm-dialog{
+    background-color: while;
+    max-width: 400px !important;
+    .btn-primary {
+        font-family: "Roboto Condensed", sans-serif;
+        font-weight: 700 !important;
+        color: #366c56 !important;
+        background-color: #e9f5f7 !important;
+        border-color: #366c56 !important;
+        float: right;
+        font-size: small;
+        padding: 3px 5px 3px 5px;
+        margin-left: 5px;
+        width: 40px;
+
+        &:hover {
+            background-color: #cce6eb !important;
+        }      
+    }
+    .btn-secondary {                
+        border-color: #bcdacd !important;
+        width: 60px !important;
+    }
+    .alert-text{
+        justify-content: center;
+        display: flex;    
+    }
+}
+
 .btn-secondary {
     font-family: "Roboto Condensed", sans-serif;
     font-weight: 700 !important;

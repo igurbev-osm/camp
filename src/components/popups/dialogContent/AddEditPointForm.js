@@ -1,19 +1,21 @@
 import { useContext, useState } from "react";
-import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Image} from "react-bootstrap";
+import Alert from "../../sub/Alert"
 import _pointServeceF from "../../../server/point";
 import { SessionContext } from "../../../context/SessionContext";
 import PointTypesDropdown from "../../sub/PointTypesDropdown";
 
 const AddEditPointForm = ({ point, addStack, done }) => {
-    const _axios = useContext(SessionContext);   
+    const _axios = useContext(SessionContext);
     const _pointService = (_pointServeceF.bind(_axios))();
     const [pointType, setPointType] = useState({ id: (point.typeid || 1), url: point.url });
+    const [alert, setAlert] = useState(null);
 
-    const [errors, setErrors] = useState({name: false, descr: false});
+    const [errors, setErrors] = useState({ name: false, descr: false });
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        let newPoint = { lat: point.lat, lng: point.lng, typeid: pointType.id };                
+        let newPoint = { lat: point.lat, lng: point.lng, typeid: pointType.id };
         const form = event.target;
         const formData = new FormData(form);
 
@@ -26,9 +28,9 @@ const AddEditPointForm = ({ point, addStack, done }) => {
             //TODO            
         } else {
             if (point.id) {
-                newPoint = await _pointService.updatePoint( { ...point, ...newPoint });
+                newPoint = await _pointService.updatePoint({ ...point, ...newPoint });
             } else {
-                newPoint = await _pointService.addPoint( newPoint);
+                newPoint = await _pointService.addPoint(newPoint);
             }
 
             newPoint.url = pointType.url;
@@ -44,7 +46,7 @@ const AddEditPointForm = ({ point, addStack, done }) => {
     const resetValues = form => {
         form.title.value = "";
         form.description.value = "";
-    };   
+    };
 
     return (
         <div className="dialog-content-holder">
@@ -64,16 +66,16 @@ const AddEditPointForm = ({ point, addStack, done }) => {
                                     required
                                     placeholder="Place your Point Name here"
                                     defaultValue={point.id ? point.title : ""}
-                                    isInvalid={errors.name}                                    
-                                    onChange={e=>{
-                                        const newValue = !(e.currentTarget.value.length > 3);                                       
-                                        setErrors(errors => errors.name === newValue ? errors : {...errors, name: newValue});                                        
+                                    isInvalid={errors.name}
+                                    onChange={e => {
+                                        const newValue = !(e.currentTarget.value.length > 3);
+                                        setErrors(errors => errors.name === newValue ? errors : { ...errors, name: newValue });
                                     }}
                                 />
-                                                                <Form.Control.Feedback type="invalid" className="validation-feedback">
+                                <Form.Control.Feedback type="invalid" className="validation-feedback">
                                     The point name must be at least 4 characters long.
                                 </Form.Control.Feedback>
-                                
+
                             </Form.Group>
                         </Col>
                     </Row>
@@ -88,9 +90,9 @@ const AddEditPointForm = ({ point, addStack, done }) => {
                                     style={{ height: '200px' }}
                                     defaultValue={point.description}
                                     isInvalid={errors.descr}
-                                    onChange={e=>{
-                                        const newValue = !(e.currentTarget.value.length > 9);                                       
-                                        setErrors(errors => errors.descr === newValue ? errors : {...errors, descr: newValue});                                        
+                                    onChange={e => {
+                                        const newValue = !(e.currentTarget.value.length > 9);
+                                        setErrors(errors => errors.descr === newValue ? errors : { ...errors, descr: newValue });
                                     }}
                                 />
                                 <Form.Control.Feedback type="invalid" className="validation-feedback">
@@ -102,21 +104,22 @@ const AddEditPointForm = ({ point, addStack, done }) => {
                     <Row >
                         <Col >
                             <div className="empty-content">
-                                
+
                             </div>
                         </Col>
                     </Row>
-                    </Container>
-                    <PointTypesDropdown initTypeId={point.typeid || 1} onChange={(pointType) => { setPointType(pointType) }} />
-<div className="add-point-logo-holder">
-                    <Image src="/img/CamPointLogo.png" className="add-point-logo"/>
-</div>
-                
+                </Container>
+                <PointTypesDropdown initTypeId={point.typeid || 1} onChange={(pointType) => { setPointType(pointType) }} />
+                <div className="add-point-logo-holder">
+                    <Image src="/img/CamPointLogo.png" className="add-point-logo" />
+                </div>
+
                 <div className="content-footer">
                     <Button variant="primary" type="submit" className="next-button" > Next </Button>
                     <Button variant="primary" className="btn-secondary" onClick={() => done(point, true)} > Close </Button>
                 </div>
             </Form>
+            <Alert show={alert} onCancel={() => setAlert(null)} message={alert} />
         </div>
     );
 }
