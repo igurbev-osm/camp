@@ -1,6 +1,16 @@
 
-  .container{
-    width: 90%;
+  .container-browser{
+    width: 100% !important;    
+    max-width: 70% !important;    
+    margin: auto;   
+    
+    .avatar{
+      height: 35px;;
+    }
+  }
+
+  .container-mobile{
+    width: 100% !important;    
     margin: auto;   
     
     .avatar{

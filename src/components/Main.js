@@ -6,7 +6,7 @@ import Menu from "./menu/Menu";
 import { BrowserRouter, useParams, Route, Routes } from "react-router-dom";
 import { ViewContext } from "../context/ViewContext";
 
-function Main() {
+function Main({device}) {
 
     const [axios, setAxios] = useState(initAxios);
     const [view, setView] = useState("map");
@@ -14,13 +14,14 @@ function Main() {
     const Child = () => {
         let { pointId, viewName} = useParams();       
         return <MapComponent pointId={pointId} currentView={viewName} />
-    }
-    
+    };   
+ 
+
     return (
         <SessionContext.Provider value={axios}>
             <ViewContext.Provider value={{view, setView}}>
                 <BrowserRouter>
-                    <Container className="container">
+                    <Container className={"container-" + device}>
                         <Row>
                             <Col>
                                 <Menu setSession={setAxios} />
