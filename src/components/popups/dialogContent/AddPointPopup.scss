@@ -11,9 +11,7 @@
         }
 
         .modal-body {
-            .form-control{
-                
-                
+            .form-control {
             }
             .form-select {
                 color: #366c56 !important;
@@ -22,13 +20,14 @@
             .empty-content {
                 min-height: 10px;
             }
-
-           .add-point-logo{
-               padding-top: 30px;
-               height: 175px;
-               width: 100%;
-           }
-
+            .add-point-logo-holder {
+                position: absolute;
+                bottom: 20px;
+                .add-point-logo {                    
+                    
+                    width: 98%;
+                }
+            }
             .rating {
                 padding: 30px 0px 0px 10px;
             }

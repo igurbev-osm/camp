@@ -46,7 +46,7 @@ const DialogContainer = ({ initQueue, initData, onHide}) => {
     return (
         <>
             {data && <Modal               
-                show={true} onHide={onHide}
+                show={true} 
                 dialogClassName="modal-90w dialog-container"
                 contentClassName="dialog-content"
                 aria-labelledby="contained-modal-title-vcenter"
