@@ -1,14 +1,12 @@
 import React from 'react';
-import Main from './components/Main';
-
 import "./App.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import DeviceSwitcher from './components/DeviceSwitcher';
+import Main from './components/Main';
 
 const App = () => {
   return (
-    <DeviceSwitcher />
+    <Main />
   );
 }
 
-export default App
+export default App;
