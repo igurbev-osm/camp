@@ -1,5 +1,5 @@
 ![](/public/img/CamPointLogo.png)
----
+
 # CamPoint
 > CamPoint is a web application for camper or van travelers, enabling registered users to submit location, type, images, rate and description of places where they have been camping and would like to share with others, or places where a camper can find a source of water or a barbeque. Registered users can also edit and delete their points. The application offers the option visitors to browse all the points submitted by other users. The app is applicable on mobiles too.
 ---
@@ -16,7 +16,7 @@
 - React
 - PostgreSQL
 - Axios
-- SCSS
+- SASS
 - Bootstrap
 - JavaScript
 - JSX
