@@ -17,10 +17,10 @@ const AuthHeader = ({ setSession: setAxios }) => {
     useEffect(() =>{
         (async () => {
             if (!user && isLoggedIn(_axios)) {
-                const userInfo = await _userService.getUserInfo();
+                const userInfo = await (_userServiceF.bind(_axios))().getUserInfo();
                 setUser(userInfo);
             }
-        })()},[_axios, _userService, user]
+        })()},[user, _axios]
       );
 
     const login = async (params) => {
@@ -34,8 +34,8 @@ const AuthHeader = ({ setSession: setAxios }) => {
 
     const logout = () => {
         setSessionCookie(null);
-        setUser(null);
         setAxios(initAxios);
+        setUser(null);       
     }
 
     return (
@@ -68,7 +68,7 @@ const AuthHeader = ({ setSession: setAxios }) => {
                     cookiePolicy={'single_host_origin'}
                     style={{ height: '30px' }}
                 />}
-                <Alert show={alert} message={alert} onCancel={setAlert(null)}/>
+                <Alert show={alert} message={alert} onCancel={() => setAlert(null)}/>
         </div>
     );
 }
