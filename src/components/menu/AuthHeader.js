@@ -6,11 +6,13 @@ import { googleMapConfig } from "../../config/config";
 import { useContext, useEffect, useState } from "react";
 import { initAxios, SessionContext, setSessionCookie } from "../../context/SessionContext"
 import { isLoggedIn } from "../../utils/session";
+import Alert from "../sub/Alert";
 
 const AuthHeader = ({ setSession: setAxios }) => {
     const _axios = useContext(SessionContext);
     const _userService = (_userServiceF.bind(_axios))();
     const [user, setUser] = useState(null);
+    const [alert, setAlert] = useState(false);
 
     useEffect(() =>{
         (async () => {
@@ -59,10 +61,14 @@ const AuthHeader = ({ setSession: setAxios }) => {
                     onSuccess={(success) => {
                         login({ profile: success.profileObj, token: success.tokenObj });
                     }}
-                    onFailure={(failure) => { console.log("google failure: ", failure) }}
+                    onFailure={(failure) => { 
+                        console.log("google failure: ", failure);
+                        setAlert("Google login failed");
+                    }}
                     cookiePolicy={'single_host_origin'}
                     style={{ height: '30px' }}
                 />}
+                <Alert show={alert} message={alert} onCancel={setAlert(null)}/>
         </div>
     );
 }

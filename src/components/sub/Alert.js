@@ -7,7 +7,7 @@ const Alert = ({message, onCancel, title, show}) => {
   
         <Modal show={show} dialogClassName="alert-confirm-dialog">
           <Modal.Header>
-            <Modal.Title className=""></Modal.Title>
+            <Modal.Title className="">{title}</Modal.Title>
           </Modal.Header>
           <Modal.Body className="alert-text">{message}</Modal.Body>
           <Modal.Footer>
