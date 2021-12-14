@@ -3,24 +3,24 @@ import GoogleLogin, { GoogleLogout } from "react-google-login";
 import _userServiceF from "../../server/user";
 import "./AuthHeader.scss";
 import { googleMapConfig } from "../../config/config";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { initAxios, SessionContext, setSessionCookie } from "../../context/SessionContext"
 import { isLoggedIn } from "../../utils/session";
 import Alert from "../sub/Alert";
 
 const AuthHeader = ({ setSession: setAxios }) => {
-    const _axios = useContext(SessionContext);
-    const _userService = (_userServiceF.bind(_axios))();
+    const _axios = useContext(SessionContext);    
     const [user, setUser] = useState(null);
     const [alert, setAlert] = useState(false);
+    const _userService = useMemo(() =>  _userServiceF.bind(_axios)(), [_axios]);
 
     useEffect(() =>{
         (async () => {
             if (!user && isLoggedIn(_axios)) {
-                const userInfo = await (_userServiceF.bind(_axios))().getUserInfo();
+                const userInfo = await _userService.getUserInfo();
                 setUser(userInfo);
             }
-        })()},[user, _axios]
+        })()},[user, _axios, _userService]
       );
 
     const login = async (params) => {
