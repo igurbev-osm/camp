@@ -37,14 +37,9 @@
 
 ---
 
-* Registered users are able to browse all available CamPoints just as visitors, they can submit their own CamPoints by giving title, description, upload images, rate the place, describe available facilities and even suitable activities for the region. Users can edit their CamPoints and also delete them. Registered users can also comment and rate other users' CamPoints.
-     
----
-    
+* Registered users are able to browse all available CamPoints just as visitors, they can submit their own CamPoints by giving title, description, upload images, rate the place, describe available facilities and even suitable activities for the region. Users can edit their CamPoints and also delete them. Registered users can also comment and rate other users' CamPoints.     
+---    
 ## Author
 * Ivan Gurbev - [GitHub](https://github.com/igurbev-osm)
----
-> use 'cp src/config/config.js.template src/config/config.js' 
-then npm start
 ---
 [Demo](http://camp.osmap.org)
