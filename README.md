@@ -33,11 +33,16 @@
 ## Features
    
 * Home page offers a map with CamPoints and Login button.
+![](/screens/Screenshot(0).png)
 * Visitors are able to view details of all CamPoints.
-
+![](/screens/Screenshot(4).png)
+![](/screens/Screenshot(5).png)
 ---
 
 * Registered users are able to browse all available CamPoints just as visitors, they can submit their own CamPoints by giving title, description, upload images, rate the place, describe available facilities and even suitable activities for the region. Users can edit their CamPoints and also delete them. Registered users can also comment and rate other users' CamPoints.     
+![](/screens/Screenshot(1).png)
+![](/screens/Screenshot(2).png)
+![](/screens/Screenshot(3).png)
 ---    
 ## Author
 * Ivan Gurbev - [GitHub](https://github.com/igurbev-osm)
