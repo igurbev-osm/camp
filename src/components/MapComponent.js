@@ -50,7 +50,7 @@ function MapComponent({ pointId, currentView }) {
     });
 
     const markerOpacity = (marker) => {
-        if (view === "mypoints") {
+        if (view === "map") { //reverse logic -> view is url param to return to, view === "map" means "mypoints" is present
             return marker.my ? 1 : 0.3;
         }
         return 1;

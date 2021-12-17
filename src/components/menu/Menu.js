@@ -7,10 +7,7 @@ import "./Menu.scss";
 
 const Menu = ({ setSession: setAxios }) => {
     let navigate = useNavigate();
-    const {view, setView} = useContext(ViewContext);
-
-    //const newView = view === "map" ? "mypoints" : "map";    
-
+    const {view, setView} = useContext(ViewContext);    
     return (
         <Navbar bg="light" expand="lg" className="navBar">
             <Container fluid>
@@ -31,7 +28,7 @@ const Menu = ({ setSession: setAxios }) => {
                                     setView(view === "map" ? "mypoints" : "map");
                                     navigate(`/${view}/~`)}
                             }
-                        >{view === "map" ? "My" : "All"} Points</Button>
+                        >{view === "map" ? "All" : "My"} Points</Button>
                     </Nav>
                     <AuthHeader setSession={setAxios} />
                 </Navbar.Collapse>
